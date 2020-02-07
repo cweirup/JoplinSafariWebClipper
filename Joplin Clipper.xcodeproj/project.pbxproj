@@ -1,0 +1,750 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2ECB448C23ED1C0A001956F7 /* Joplin_Clipper.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 2ECB448B23ED1C0A001956F7 /* Joplin_Clipper.entitlements */; };
+		2ECB448E23ED1C0A001956F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECB448D23ED1C0A001956F7 /* AppDelegate.swift */; };
+		2ECB449123ED1C0A001956F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2ECB448F23ED1C0A001956F7 /* Main.storyboard */; };
+		2ECB449323ED1C0A001956F7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECB449223ED1C0A001956F7 /* ViewController.swift */; };
+		2ECB449523ED1C0C001956F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ECB449423ED1C0C001956F7 /* Assets.xcassets */; };
+		2ECB44A023ED1C0C001956F7 /* Joplin_ClipperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECB449F23ED1C0C001956F7 /* Joplin_ClipperTests.swift */; };
+		2ECB44AB23ED1C0C001956F7 /* Joplin_ClipperUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECB44AA23ED1C0C001956F7 /* Joplin_ClipperUITests.swift */; };
+		2ECB44B223ED1C0C001956F7 /* Joplin Clipper Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2ECB44B123ED1C0C001956F7 /* Joplin Clipper Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2ECB44B723ED1C0C001956F7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ECB44B623ED1C0C001956F7 /* Cocoa.framework */; };
+		2ECB44BA23ED1C0C001956F7 /* SafariExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECB44B923ED1C0C001956F7 /* SafariExtensionHandler.swift */; };
+		2ECB44BC23ED1C0C001956F7 /* SafariExtensionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECB44BB23ED1C0C001956F7 /* SafariExtensionViewController.swift */; };
+		2ECB44BF23ED1C0C001956F7 /* SafariExtensionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ECB44BD23ED1C0C001956F7 /* SafariExtensionViewController.xib */; };
+		2ECB44C223ED1C0C001956F7 /* script.js in Resources */ = {isa = PBXBuildFile; fileRef = 2ECB44C123ED1C0C001956F7 /* script.js */; };
+		2ECB44C423ED1C0C001956F7 /* ToolbarItemIcon.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2ECB44C323ED1C0C001956F7 /* ToolbarItemIcon.pdf */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2ECB449C23ED1C0C001956F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2ECB448023ED1C0A001956F7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2ECB448723ED1C0A001956F7;
+			remoteInfo = "Joplin Clipper";
+		};
+		2ECB44A723ED1C0C001956F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2ECB448023ED1C0A001956F7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2ECB448723ED1C0A001956F7;
+			remoteInfo = "Joplin Clipper";
+		};
+		2ECB44B323ED1C0C001956F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2ECB448023ED1C0A001956F7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2ECB44B023ED1C0C001956F7;
+			remoteInfo = "Joplin Clipper Extension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2ECB44CB23ED1C0C001956F7 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				2ECB44B223ED1C0C001956F7 /* Joplin Clipper Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		2ECB448823ED1C0A001956F7 /* Joplin Clipper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Joplin Clipper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2ECB448B23ED1C0A001956F7 /* Joplin_Clipper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Joplin_Clipper.entitlements; sourceTree = "<group>"; };
+		2ECB448D23ED1C0A001956F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		2ECB449023ED1C0A001956F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		2ECB449223ED1C0A001956F7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		2ECB449423ED1C0C001956F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2ECB449623ED1C0C001956F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2ECB449B23ED1C0C001956F7 /* Joplin ClipperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Joplin ClipperTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2ECB449F23ED1C0C001956F7 /* Joplin_ClipperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Joplin_ClipperTests.swift; sourceTree = "<group>"; };
+		2ECB44A123ED1C0C001956F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2ECB44A623ED1C0C001956F7 /* Joplin ClipperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Joplin ClipperUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2ECB44AA23ED1C0C001956F7 /* Joplin_ClipperUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Joplin_ClipperUITests.swift; sourceTree = "<group>"; };
+		2ECB44AC23ED1C0C001956F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2ECB44B123ED1C0C001956F7 /* Joplin Clipper Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Joplin Clipper Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2ECB44B623ED1C0C001956F7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		2ECB44B923ED1C0C001956F7 /* SafariExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariExtensionHandler.swift; sourceTree = "<group>"; };
+		2ECB44BB23ED1C0C001956F7 /* SafariExtensionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariExtensionViewController.swift; sourceTree = "<group>"; };
+		2ECB44BE23ED1C0C001956F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SafariExtensionViewController.xib; sourceTree = "<group>"; };
+		2ECB44C023ED1C0C001956F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2ECB44C123ED1C0C001956F7 /* script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = script.js; sourceTree = "<group>"; };
+		2ECB44C323ED1C0C001956F7 /* ToolbarItemIcon.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = ToolbarItemIcon.pdf; sourceTree = "<group>"; };
+		2ECB44C523ED1C0C001956F7 /* Joplin_Clipper_Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Joplin_Clipper_Extension.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2ECB448523ED1C0A001956F7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2ECB449823ED1C0C001956F7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2ECB44A323ED1C0C001956F7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2ECB44AE23ED1C0C001956F7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2ECB44B723ED1C0C001956F7 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2ECB447F23ED1C0A001956F7 = {
+			isa = PBXGroup;
+			children = (
+				2ECB448A23ED1C0A001956F7 /* Joplin Clipper */,
+				2ECB449E23ED1C0C001956F7 /* Joplin ClipperTests */,
+				2ECB44A923ED1C0C001956F7 /* Joplin ClipperUITests */,
+				2ECB44B823ED1C0C001956F7 /* Joplin Clipper Extension */,
+				2ECB44B523ED1C0C001956F7 /* Frameworks */,
+				2ECB448923ED1C0A001956F7 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2ECB448923ED1C0A001956F7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2ECB448823ED1C0A001956F7 /* Joplin Clipper.app */,
+				2ECB449B23ED1C0C001956F7 /* Joplin ClipperTests.xctest */,
+				2ECB44A623ED1C0C001956F7 /* Joplin ClipperUITests.xctest */,
+				2ECB44B123ED1C0C001956F7 /* Joplin Clipper Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2ECB448A23ED1C0A001956F7 /* Joplin Clipper */ = {
+			isa = PBXGroup;
+			children = (
+				2ECB448B23ED1C0A001956F7 /* Joplin_Clipper.entitlements */,
+				2ECB448D23ED1C0A001956F7 /* AppDelegate.swift */,
+				2ECB448F23ED1C0A001956F7 /* Main.storyboard */,
+				2ECB449223ED1C0A001956F7 /* ViewController.swift */,
+				2ECB449423ED1C0C001956F7 /* Assets.xcassets */,
+				2ECB449623ED1C0C001956F7 /* Info.plist */,
+			);
+			path = "Joplin Clipper";
+			sourceTree = "<group>";
+		};
+		2ECB449E23ED1C0C001956F7 /* Joplin ClipperTests */ = {
+			isa = PBXGroup;
+			children = (
+				2ECB449F23ED1C0C001956F7 /* Joplin_ClipperTests.swift */,
+				2ECB44A123ED1C0C001956F7 /* Info.plist */,
+			);
+			path = "Joplin ClipperTests";
+			sourceTree = "<group>";
+		};
+		2ECB44A923ED1C0C001956F7 /* Joplin ClipperUITests */ = {
+			isa = PBXGroup;
+			children = (
+				2ECB44AA23ED1C0C001956F7 /* Joplin_ClipperUITests.swift */,
+				2ECB44AC23ED1C0C001956F7 /* Info.plist */,
+			);
+			path = "Joplin ClipperUITests";
+			sourceTree = "<group>";
+		};
+		2ECB44B523ED1C0C001956F7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2ECB44B623ED1C0C001956F7 /* Cocoa.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2ECB44B823ED1C0C001956F7 /* Joplin Clipper Extension */ = {
+			isa = PBXGroup;
+			children = (
+				2ECB44B923ED1C0C001956F7 /* SafariExtensionHandler.swift */,
+				2ECB44BB23ED1C0C001956F7 /* SafariExtensionViewController.swift */,
+				2ECB44BD23ED1C0C001956F7 /* SafariExtensionViewController.xib */,
+				2ECB44C023ED1C0C001956F7 /* Info.plist */,
+				2ECB44C123ED1C0C001956F7 /* script.js */,
+				2ECB44C323ED1C0C001956F7 /* ToolbarItemIcon.pdf */,
+				2ECB44C523ED1C0C001956F7 /* Joplin_Clipper_Extension.entitlements */,
+			);
+			path = "Joplin Clipper Extension";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2ECB448723ED1C0A001956F7 /* Joplin Clipper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2ECB44CC23ED1C0C001956F7 /* Build configuration list for PBXNativeTarget "Joplin Clipper" */;
+			buildPhases = (
+				2ECB448423ED1C0A001956F7 /* Sources */,
+				2ECB448523ED1C0A001956F7 /* Frameworks */,
+				2ECB448623ED1C0A001956F7 /* Resources */,
+				2ECB44CB23ED1C0C001956F7 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2ECB44B423ED1C0C001956F7 /* PBXTargetDependency */,
+			);
+			name = "Joplin Clipper";
+			productName = "Joplin Clipper";
+			productReference = 2ECB448823ED1C0A001956F7 /* Joplin Clipper.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2ECB449A23ED1C0C001956F7 /* Joplin ClipperTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2ECB44CF23ED1C0C001956F7 /* Build configuration list for PBXNativeTarget "Joplin ClipperTests" */;
+			buildPhases = (
+				2ECB449723ED1C0C001956F7 /* Sources */,
+				2ECB449823ED1C0C001956F7 /* Frameworks */,
+				2ECB449923ED1C0C001956F7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2ECB449D23ED1C0C001956F7 /* PBXTargetDependency */,
+			);
+			name = "Joplin ClipperTests";
+			productName = "Joplin ClipperTests";
+			productReference = 2ECB449B23ED1C0C001956F7 /* Joplin ClipperTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		2ECB44A523ED1C0C001956F7 /* Joplin ClipperUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2ECB44D223ED1C0C001956F7 /* Build configuration list for PBXNativeTarget "Joplin ClipperUITests" */;
+			buildPhases = (
+				2ECB44A223ED1C0C001956F7 /* Sources */,
+				2ECB44A323ED1C0C001956F7 /* Frameworks */,
+				2ECB44A423ED1C0C001956F7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2ECB44A823ED1C0C001956F7 /* PBXTargetDependency */,
+			);
+			name = "Joplin ClipperUITests";
+			productName = "Joplin ClipperUITests";
+			productReference = 2ECB44A623ED1C0C001956F7 /* Joplin ClipperUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		2ECB44B023ED1C0C001956F7 /* Joplin Clipper Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2ECB44C823ED1C0C001956F7 /* Build configuration list for PBXNativeTarget "Joplin Clipper Extension" */;
+			buildPhases = (
+				2ECB44AD23ED1C0C001956F7 /* Sources */,
+				2ECB44AE23ED1C0C001956F7 /* Frameworks */,
+				2ECB44AF23ED1C0C001956F7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Joplin Clipper Extension";
+			productName = "Joplin Clipper Extension";
+			productReference = 2ECB44B123ED1C0C001956F7 /* Joplin Clipper Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2ECB448023ED1C0A001956F7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1130;
+				LastUpgradeCheck = 1130;
+				ORGANIZATIONNAME = "Christopher Weirup";
+				TargetAttributes = {
+					2ECB448723ED1C0A001956F7 = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
+					2ECB449A23ED1C0C001956F7 = {
+						CreatedOnToolsVersion = 11.3.1;
+						TestTargetID = 2ECB448723ED1C0A001956F7;
+					};
+					2ECB44A523ED1C0C001956F7 = {
+						CreatedOnToolsVersion = 11.3.1;
+						TestTargetID = 2ECB448723ED1C0A001956F7;
+					};
+					2ECB44B023ED1C0C001956F7 = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 2ECB448323ED1C0A001956F7 /* Build configuration list for PBXProject "Joplin Clipper" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2ECB447F23ED1C0A001956F7;
+			productRefGroup = 2ECB448923ED1C0A001956F7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2ECB448723ED1C0A001956F7 /* Joplin Clipper */,
+				2ECB449A23ED1C0C001956F7 /* Joplin ClipperTests */,
+				2ECB44A523ED1C0C001956F7 /* Joplin ClipperUITests */,
+				2ECB44B023ED1C0C001956F7 /* Joplin Clipper Extension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2ECB448623ED1C0A001956F7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2ECB448C23ED1C0A001956F7 /* Joplin_Clipper.entitlements in Resources */,
+				2ECB449523ED1C0C001956F7 /* Assets.xcassets in Resources */,
+				2ECB449123ED1C0A001956F7 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2ECB449923ED1C0C001956F7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2ECB44A423ED1C0C001956F7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2ECB44AF23ED1C0C001956F7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2ECB44C423ED1C0C001956F7 /* ToolbarItemIcon.pdf in Resources */,
+				2ECB44BF23ED1C0C001956F7 /* SafariExtensionViewController.xib in Resources */,
+				2ECB44C223ED1C0C001956F7 /* script.js in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2ECB448423ED1C0A001956F7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2ECB449323ED1C0A001956F7 /* ViewController.swift in Sources */,
+				2ECB448E23ED1C0A001956F7 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2ECB449723ED1C0C001956F7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2ECB44A023ED1C0C001956F7 /* Joplin_ClipperTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2ECB44A223ED1C0C001956F7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2ECB44AB23ED1C0C001956F7 /* Joplin_ClipperUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2ECB44AD23ED1C0C001956F7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2ECB44BC23ED1C0C001956F7 /* SafariExtensionViewController.swift in Sources */,
+				2ECB44BA23ED1C0C001956F7 /* SafariExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2ECB449D23ED1C0C001956F7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2ECB448723ED1C0A001956F7 /* Joplin Clipper */;
+			targetProxy = 2ECB449C23ED1C0C001956F7 /* PBXContainerItemProxy */;
+		};
+		2ECB44A823ED1C0C001956F7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2ECB448723ED1C0A001956F7 /* Joplin Clipper */;
+			targetProxy = 2ECB44A723ED1C0C001956F7 /* PBXContainerItemProxy */;
+		};
+		2ECB44B423ED1C0C001956F7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2ECB44B023ED1C0C001956F7 /* Joplin Clipper Extension */;
+			targetProxy = 2ECB44B323ED1C0C001956F7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		2ECB448F23ED1C0A001956F7 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2ECB449023ED1C0A001956F7 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		2ECB44BD23ED1C0C001956F7 /* SafariExtensionViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2ECB44BE23ED1C0C001956F7 /* Base */,
+			);
+			name = SafariExtensionViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2ECB44C623ED1C0C001956F7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		2ECB44C723ED1C0C001956F7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		2ECB44C923ED1C0C001956F7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Joplin Clipper Extension/Joplin_Clipper_Extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "Joplin Clipper Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cweirup.Joplin-Clipper-Extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		2ECB44CA23ED1C0C001956F7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Joplin Clipper Extension/Joplin_Clipper_Extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "Joplin Clipper Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cweirup.Joplin-Clipper-Extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		2ECB44CD23ED1C0C001956F7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Joplin Clipper/Joplin_Clipper.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Joplin Clipper/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cweirup.Joplin-Clipper";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		2ECB44CE23ED1C0C001956F7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Joplin Clipper/Joplin_Clipper.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Joplin Clipper/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cweirup.Joplin-Clipper";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		2ECB44D023ED1C0C001956F7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Joplin ClipperTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cweirup.Joplin-ClipperTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Joplin Clipper.app/Contents/MacOS/Joplin Clipper";
+			};
+			name = Debug;
+		};
+		2ECB44D123ED1C0C001956F7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Joplin ClipperTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cweirup.Joplin-ClipperTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Joplin Clipper.app/Contents/MacOS/Joplin Clipper";
+			};
+			name = Release;
+		};
+		2ECB44D323ED1C0C001956F7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Joplin ClipperUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cweirup.Joplin-ClipperUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "Joplin Clipper";
+			};
+			name = Debug;
+		};
+		2ECB44D423ED1C0C001956F7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Joplin ClipperUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cweirup.Joplin-ClipperUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "Joplin Clipper";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2ECB448323ED1C0A001956F7 /* Build configuration list for PBXProject "Joplin Clipper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2ECB44C623ED1C0C001956F7 /* Debug */,
+				2ECB44C723ED1C0C001956F7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2ECB44C823ED1C0C001956F7 /* Build configuration list for PBXNativeTarget "Joplin Clipper Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2ECB44C923ED1C0C001956F7 /* Debug */,
+				2ECB44CA23ED1C0C001956F7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2ECB44CC23ED1C0C001956F7 /* Build configuration list for PBXNativeTarget "Joplin Clipper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2ECB44CD23ED1C0C001956F7 /* Debug */,
+				2ECB44CE23ED1C0C001956F7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2ECB44CF23ED1C0C001956F7 /* Build configuration list for PBXNativeTarget "Joplin ClipperTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2ECB44D023ED1C0C001956F7 /* Debug */,
+				2ECB44D123ED1C0C001956F7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2ECB44D223ED1C0C001956F7 /* Build configuration list for PBXNativeTarget "Joplin ClipperUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2ECB44D323ED1C0C001956F7 /* Debug */,
+				2ECB44D423ED1C0C001956F7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2ECB448023ED1C0A001956F7 /* Project object */;
+}

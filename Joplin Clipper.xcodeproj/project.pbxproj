@@ -21,6 +21,10 @@
 		2ECB44BF23ED1C0C001956F7 /* SafariExtensionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ECB44BD23ED1C0C001956F7 /* SafariExtensionViewController.xib */; };
 		2ECB44C223ED1C0C001956F7 /* script.js in Resources */ = {isa = PBXBuildFile; fileRef = 2ECB44C123ED1C0C001956F7 /* script.js */; };
 		2ECB44C423ED1C0C001956F7 /* ToolbarItemIcon.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2ECB44C323ED1C0C001956F7 /* ToolbarItemIcon.pdf */; };
+		2EEE8B8B2400E30F00F751CC /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2EEE8B8A2400E30F00F751CC /* .gitignore */; };
+		2EEE8B8C2400E30F00F751CC /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2EEE8B8A2400E30F00F751CC /* .gitignore */; };
+		2EEE8B8D2400E31000F751CC /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2EEE8B8A2400E30F00F751CC /* .gitignore */; };
+		2EEE8B8E2400E31000F751CC /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2EEE8B8A2400E30F00F751CC /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +88,7 @@
 		2ECB44C123ED1C0C001956F7 /* script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = script.js; sourceTree = "<group>"; };
 		2ECB44C323ED1C0C001956F7 /* ToolbarItemIcon.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = ToolbarItemIcon.pdf; sourceTree = "<group>"; };
 		2ECB44C523ED1C0C001956F7 /* Joplin_Clipper_Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Joplin_Clipper_Extension.entitlements; sourceTree = "<group>"; };
+		2EEE8B8A2400E30F00F751CC /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +127,7 @@
 		2ECB447F23ED1C0A001956F7 = {
 			isa = PBXGroup;
 			children = (
+				2EEE8B892400E2B300F751CC /* Git */,
 				2ECB448A23ED1C0A001956F7 /* Joplin Clipper */,
 				2ECB449E23ED1C0C001956F7 /* Joplin ClipperTests */,
 				2ECB44A923ED1C0C001956F7 /* Joplin ClipperUITests */,
@@ -193,6 +199,14 @@
 				2ECB44C523ED1C0C001956F7 /* Joplin_Clipper_Extension.entitlements */,
 			);
 			path = "Joplin Clipper Extension";
+			sourceTree = "<group>";
+		};
+		2EEE8B892400E2B300F751CC /* Git */ = {
+			isa = PBXGroup;
+			children = (
+				2EEE8B8A2400E30F00F751CC /* .gitignore */,
+			);
+			path = Git;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -322,6 +336,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EEE8B8B2400E30F00F751CC /* .gitignore in Resources */,
 				2ECB448C23ED1C0A001956F7 /* Joplin_Clipper.entitlements in Resources */,
 				2ECB449523ED1C0C001956F7 /* Assets.xcassets in Resources */,
 				2ECB449123ED1C0A001956F7 /* Main.storyboard in Resources */,
@@ -332,6 +347,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EEE8B8C2400E30F00F751CC /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +355,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EEE8B8D2400E31000F751CC /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,6 +363,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EEE8B8E2400E31000F751CC /* .gitignore in Resources */,
 				2ECB44C423ED1C0C001956F7 /* ToolbarItemIcon.pdf in Resources */,
 				2ECB44BF23ED1C0C001956F7 /* SafariExtensionViewController.xib in Resources */,
 				2ECB44C223ED1C0C001956F7 /* script.js in Resources */,

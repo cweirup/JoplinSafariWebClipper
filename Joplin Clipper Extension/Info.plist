@@ -60,10 +60,10 @@
 	<string>Copyright © 2020 Christopher Weirup. All rights reserved.</string>
 	<key>NSHumanReadableDescription</key>
 	<string>Safari extension to save web pages to Joplin, the open source note taking application.</string>
-    <key>NSAppTransportSecurity</key>
-    <dict>
-        <key>NSAllowsArbitraryLoads</key>
-        <true/>
-    </dict>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

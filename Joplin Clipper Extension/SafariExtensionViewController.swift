@@ -13,6 +13,7 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
     @IBOutlet weak var pageTitle: NSTextField!
     @IBOutlet weak var pageUrl: NSTextField!
     @IBOutlet weak var pageTitleLabel: NSTextField!
+    @IBOutlet weak var serverStatusIcon: NSImageView!
     
     static let shared: SafariExtensionViewController = {
         let shared = SafariExtensionViewController()
@@ -85,6 +86,28 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
 
     }
     
+    @IBAction func clipCompletePage(_ sender: Any) {
+        NSLog("In clipCompletePage")
+        sendCommandToActiveTab(command: ["name": "completePageHtml", "preProcessFor": "markdown"])
+    }
+    
+    @IBAction func clipSimplifiedPage(_ sender: Any) {
+        NSLog("In clipSimplifiedPage")
+        sendCommandToActiveTab(command: ["name": "simplifiedPageHtml"])
+    }
+    
+    func sendCommandToActiveTab(command: Dictionary<String, String>) {
+        NSLog("In sendCommandToActiveTab")
+        // Send 'command' to current page
+        SFSafariApplication.getActiveWindow{ (activeWindow) in
+            activeWindow?.getActiveTab{ (activeTab) in
+                activeTab?.getActivePage{ (activePage) in
+                    activePage?.dispatchMessageToScript(withName: "command", userInfo: command)
+                }
+            }
+        }
+    }
+    
     func loadPageInfo() {
         SFSafariApplication.getActiveWindow{ (activeWindow) in
             activeWindow?.getActiveTab{ (activeTab) in
@@ -137,8 +160,10 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
 
             if receivedStatus == "JoplinClipperServer" {
                 self.pageTitleLabel.stringValue = "Server is running!"
+                self.serverStatusIcon.image = NSImage(byReferencingFile: "led_green.png")
             } else {
                 self.pageTitleLabel.stringValue = "Server is not running!"
+                self.serverStatusIcon.image = NSImage(byReferencingFile: "led_red.png")
             }
             
             //guard let noteID = receivedNote["id"] as? String else {

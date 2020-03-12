@@ -11,6 +11,7 @@
                 <outlet property="pageTitle" destination="zFF-Cq-MvG" id="ItV-Ou-d3W"/>
                 <outlet property="pageTitleLabel" destination="Evg-xJ-xxc" id="JD2-Xz-O0Z"/>
                 <outlet property="pageUrl" destination="nwg-FF-8hw" id="rqA-Ig-ODc"/>
+                <outlet property="serverStatusIcon" destination="3Ab-f5-VGt" id="4no-Fj-GUz"/>
                 <outlet property="view" destination="c22-O7-iKe" id="vwT-Xx-Aiz"/>
             </connections>
         </customObject>
@@ -67,8 +68,35 @@
                         <action selector="clipUrl:" target="-2" id="uz0-FG-oC3"/>
                     </connections>
                 </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hAd-AB-Qcr">
+                    <rect key="frame" x="15" y="89" width="291" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Clip Complete Page" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="khU-cW-Poi">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="clipCompletePage:" target="-2" id="eye-dx-B1I"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5oW-2W-uyf">
+                    <rect key="frame" x="15" y="56" width="291" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Clip Simplified Page" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nPA-Jd-aw6">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="clipSimplifiedPage:" target="-2" id="KcT-vx-oKU"/>
+                    </connections>
+                </button>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Ab-f5-VGt">
+                    <rect key="frame" x="21" y="23" width="8" height="8"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="led_green" id="o2R-5Q-Ocz"/>
+                </imageView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Evg-xJ-xxc">
-                    <rect key="frame" x="18" y="20" width="284" height="16"/>
+                    <rect key="frame" x="35" y="20" width="267" height="16"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="2wz-Le-hk7">
                         <font key="font" metaFont="system"/>
@@ -80,4 +108,7 @@
             <point key="canvasLocation" x="80" y="12"/>
         </customView>
     </objects>
+    <resources>
+        <image name="led_green" width="8" height="8"/>
+    </resources>
 </document>

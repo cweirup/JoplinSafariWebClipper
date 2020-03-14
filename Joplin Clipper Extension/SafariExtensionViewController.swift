@@ -25,6 +25,8 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
         print("Entered viewWillAppear()")
         super.viewWillAppear()
         checkServerStatus()
+        loadNotebooks()
+        loadTags()
         loadPageInfo()
     }
     
@@ -143,6 +145,7 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
             NSLog("error calling GET on /ping. Assume service is not running")
             //NSLog(error!)
             self.pageTitleLabel.stringValue = "Server is not running!"
+            self.serverStatusIcon.image = NSImage(named: "led_red")
             return
           }
           guard let responseData = data else {
@@ -151,7 +154,6 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
           }
         
           // parse the result as String, since that's what the API provides
-          do {
             guard let receivedStatus = String(data: responseData, encoding: .utf8) else {
                 NSLog("Count not parse server status from response.")
                 return
@@ -160,21 +162,12 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
 
             if receivedStatus == "JoplinClipperServer" {
                 self.pageTitleLabel.stringValue = "Server is running!"
-                self.serverStatusIcon.image = NSImage(byReferencingFile: "led_green.png")
+                self.serverStatusIcon.image = NSImage(named: "led_green")
             } else {
                 self.pageTitleLabel.stringValue = "Server is not running!"
-                self.serverStatusIcon.image = NSImage(byReferencingFile: "led_red.png")
+                self.serverStatusIcon.image = NSImage(named: "led_red")
             }
             
-            //guard let noteID = receivedNote["id"] as? String else {
-            //  NSLog("Could not get todoID as int from JSON")
-            //  return
-            //}
-            //NSLog("The ID is: \(noteID)")
-          } catch  {
-            NSLog("error parsing response from POST on /notes")
-            return
-          }
         }
         task.resume()
 
@@ -182,4 +175,11 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
         //self.pageTitleLabel.stringValue = pageProperties?.title ?? ""
     }
 
+    func loadNotebooks() {
+        // Run code to generate list of notebooks
+    }
+    
+    func loadTags() {
+        // Run code to generate list of tags
+    }
 }

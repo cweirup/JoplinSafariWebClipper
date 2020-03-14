@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     safari.extension.dispatchMessage("Hello World!");
 });
 
-function handleMessage(event) {
+async function handleMessage(event) {
     console.log(event.name);
     console.log(event.message);
     console.log(event.message.name);
@@ -13,10 +13,20 @@ function handleMessage(event) {
     if (event.name == "command") {
         // Execute the command
         const commandObj = event.message
-        const response = prepareCommandResponse(commandObj);
-        console.log(response)
+        const response = await prepareCommandResponse(commandObj);
+//        console.log(response)
+//        console.log(response.base_url)
         // Send message back to extension
-        safari.extension.dispatchMessage("commandResponse", response.result);
+        const resultResponse = {
+            "base_url": response.base_url,
+            "convert_to": response.convert_to,
+            "html": response.html,
+            "name": response.name,
+            "title": response.title,
+            "url": response.url
+        }
+        //safari.extension.dispatchMessage("commandResponse", response.result);
+        safari.extension.dispatchMessage("commandResponse", resultResponse);
     }
 }
 

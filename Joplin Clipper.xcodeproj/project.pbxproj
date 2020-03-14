@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E740871241C86E70011240B /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E740870241C86E70011240B /* Note.swift */; };
+		2E740873241C89960011240B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E740872241C89960011240B /* Images.xcassets */; };
 		2ECB448C23ED1C0A001956F7 /* Joplin_Clipper.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 2ECB448B23ED1C0A001956F7 /* Joplin_Clipper.entitlements */; };
 		2ECB448E23ED1C0A001956F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECB448D23ED1C0A001956F7 /* AppDelegate.swift */; };
 		2ECB449123ED1C0A001956F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2ECB448F23ED1C0A001956F7 /* Main.storyboard */; };
@@ -37,18 +39,6 @@
 		2EEE8BA02415BF2300F751CC /* Readability.js in Resources */ = {isa = PBXBuildFile; fileRef = 2EEE8B922415BF2200F751CC /* Readability.js */; };
 		2EEE8BA12415BF2300F751CC /* Readability.js in Resources */ = {isa = PBXBuildFile; fileRef = 2EEE8B922415BF2200F751CC /* Readability.js */; };
 		2EEE8BA22415BF2300F751CC /* Readability.js in Resources */ = {isa = PBXBuildFile; fileRef = 2EEE8B922415BF2200F751CC /* Readability.js */; };
-		2EEE8BA62415DE6D00F751CC /* led_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EEE8BA32415DE6C00F751CC /* led_green.png */; };
-		2EEE8BA72415DE6D00F751CC /* led_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EEE8BA32415DE6C00F751CC /* led_green.png */; };
-		2EEE8BA82415DE6D00F751CC /* led_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EEE8BA32415DE6C00F751CC /* led_green.png */; };
-		2EEE8BA92415DE6D00F751CC /* led_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EEE8BA32415DE6C00F751CC /* led_green.png */; };
-		2EEE8BAA2415DE6D00F751CC /* led_orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EEE8BA42415DE6C00F751CC /* led_orange.png */; };
-		2EEE8BAB2415DE6D00F751CC /* led_orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EEE8BA42415DE6C00F751CC /* led_orange.png */; };
-		2EEE8BAC2415DE6D00F751CC /* led_orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EEE8BA42415DE6C00F751CC /* led_orange.png */; };
-		2EEE8BAD2415DE6D00F751CC /* led_orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EEE8BA42415DE6C00F751CC /* led_orange.png */; };
-		2EEE8BAE2415DE6D00F751CC /* led_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EEE8BA52415DE6D00F751CC /* led_red.png */; };
-		2EEE8BAF2415DE6D00F751CC /* led_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EEE8BA52415DE6D00F751CC /* led_red.png */; };
-		2EEE8BB02415DE6D00F751CC /* led_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EEE8BA52415DE6D00F751CC /* led_red.png */; };
-		2EEE8BB12415DE6D00F751CC /* led_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EEE8BA52415DE6D00F751CC /* led_red.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +80,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2E740870241C86E70011240B /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		2E740872241C89960011240B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2ECB448823ED1C0A001956F7 /* Joplin Clipper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Joplin Clipper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ECB448B23ED1C0A001956F7 /* Joplin_Clipper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Joplin_Clipper.entitlements; sourceTree = "<group>"; };
 		2ECB448D23ED1C0A001956F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -116,9 +108,6 @@
 		2EEE8B902415BF2200F751CC /* JSDOMParser.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = JSDOMParser.js; sourceTree = "<group>"; };
 		2EEE8B912415BF2200F751CC /* Readability-readerable.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "Readability-readerable.js"; sourceTree = "<group>"; };
 		2EEE8B922415BF2200F751CC /* Readability.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Readability.js; sourceTree = "<group>"; };
-		2EEE8BA32415DE6C00F751CC /* led_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = led_green.png; sourceTree = "<group>"; };
-		2EEE8BA42415DE6C00F751CC /* led_orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = led_orange.png; sourceTree = "<group>"; };
-		2EEE8BA52415DE6D00F751CC /* led_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = led_red.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,10 +218,9 @@
 				2EEE8B912415BF2200F751CC /* Readability-readerable.js */,
 				2EEE8B922415BF2200F751CC /* Readability.js */,
 				2ECB44C323ED1C0C001956F7 /* ToolbarItemIcon.pdf */,
-				2EEE8BA32415DE6C00F751CC /* led_green.png */,
-				2EEE8BA42415DE6C00F751CC /* led_orange.png */,
-				2EEE8BA52415DE6D00F751CC /* led_red.png */,
 				2ECB44C523ED1C0C001956F7 /* Joplin_Clipper_Extension.entitlements */,
+				2E740870241C86E70011240B /* Note.swift */,
+				2E740872241C89960011240B /* Images.xcassets */,
 			);
 			path = "Joplin Clipper Extension";
 			sourceTree = "<group>";
@@ -377,11 +365,8 @@
 				2EEE8B9F2415BF2300F751CC /* Readability.js in Resources */,
 				2ECB448C23ED1C0A001956F7 /* Joplin_Clipper.entitlements in Resources */,
 				2EEE8B972415BF2300F751CC /* JSDOMParser.js in Resources */,
-				2EEE8BAE2415DE6D00F751CC /* led_red.png in Resources */,
 				2ECB449523ED1C0C001956F7 /* Assets.xcassets in Resources */,
 				2ECB449123ED1C0A001956F7 /* Main.storyboard in Resources */,
-				2EEE8BA62415DE6D00F751CC /* led_green.png in Resources */,
-				2EEE8BAA2415DE6D00F751CC /* led_orange.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,9 +378,6 @@
 				2EEE8B8C2400E30F00F751CC /* .gitignore in Resources */,
 				2EEE8B9C2415BF2300F751CC /* Readability-readerable.js in Resources */,
 				2EEE8BA02415BF2300F751CC /* Readability.js in Resources */,
-				2EEE8BAF2415DE6D00F751CC /* led_red.png in Resources */,
-				2EEE8BA72415DE6D00F751CC /* led_green.png in Resources */,
-				2EEE8BAB2415DE6D00F751CC /* led_orange.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -407,9 +389,6 @@
 				2EEE8B8D2400E31000F751CC /* .gitignore in Resources */,
 				2EEE8B9D2415BF2300F751CC /* Readability-readerable.js in Resources */,
 				2EEE8BA12415BF2300F751CC /* Readability.js in Resources */,
-				2EEE8BB02415DE6D00F751CC /* led_red.png in Resources */,
-				2EEE8BA82415DE6D00F751CC /* led_green.png in Resources */,
-				2EEE8BAC2415DE6D00F751CC /* led_orange.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,12 +400,10 @@
 				2EEE8B8E2400E31000F751CC /* .gitignore in Resources */,
 				2EEE8BA22415BF2300F751CC /* Readability.js in Resources */,
 				2ECB44C423ED1C0C001956F7 /* ToolbarItemIcon.pdf in Resources */,
+				2E740873241C89960011240B /* Images.xcassets in Resources */,
 				2EEE8B9A2415BF2300F751CC /* JSDOMParser.js in Resources */,
-				2EEE8BB12415DE6D00F751CC /* led_red.png in Resources */,
 				2ECB44BF23ED1C0C001956F7 /* SafariExtensionViewController.xib in Resources */,
 				2ECB44C223ED1C0C001956F7 /* script.js in Resources */,
-				2EEE8BA92415DE6D00F751CC /* led_green.png in Resources */,
-				2EEE8BAD2415DE6D00F751CC /* led_orange.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,6 +441,7 @@
 			files = (
 				2ECB44BC23ED1C0C001956F7 /* SafariExtensionViewController.swift in Sources */,
 				2ECB44BA23ED1C0C001956F7 /* SafariExtensionHandler.swift in Sources */,
+				2E740871241C86E70011240B /* Note.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,8 +15,9 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
         page.getPropertiesWithCompletionHandler { properties in
             NSLog("The extension received a message (\(messageName)) from a script injected into (\(String(describing: properties?.url))) with userInfo (\(userInfo ?? [:]))")
             
-            let newNote = Note(base_url: userInfo?["base_url"] as! String, title: userInfo?["title"] as! String, url: userInfo?["url"] as! String, body: userInfo?["html"] as! String)
-            NSLog(newNote.base_url)
+            //let newNote = Note(base_url: userInfo?["base_url"] as! String, title: userInfo?["title"] as! String, url: userInfo?["url"] as! String, body: userInfo?["html"] as! String)
+            let newNote = Note(title: userInfo?["title"] as! String, url: userInfo?["url"] as! String)
+            NSLog(newNote.title!)
         }
     }
     

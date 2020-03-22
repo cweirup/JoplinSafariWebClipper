@@ -9,21 +9,30 @@
 import Foundation
 
 struct Note: Codable {
-    let base_url: String
-    let title: String
-    let url: String
-    let body: String
+    let id: String?
+    let base_url: String?
+    let parent_id: String?
+    let title: String?
+    let url: String?
+    let body: String?
 }
 
 extension Note {
     init(title: String, url: String) {
         self.title = title
         self.url = url
+        self.id = ""
         self.base_url = ""
+        self.parent_id = ""
         self.body = ""
     }
-    
-    func saveToJoplin() {
-        
+
+    init(title: String, url: String, parent: String) {
+        self.title = title
+        self.url = url
+        self.parent_id = parent
+        self.id = ""
+        self.base_url = ""
+        self.body = ""
     }
 }

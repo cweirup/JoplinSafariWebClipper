@@ -17,16 +17,16 @@ async function handleMessage(event) {
 //        console.log(response)
 //        console.log(response.base_url)
         // Send message back to extension
-        const resultResponse = {
-            "base_url": response.base_url,
-            "convert_to": response.convert_to,
-            "html": response.html,
-            "name": response.name,
-            "title": response.title,
-            "url": response.url
-        }
-        //safari.extension.dispatchMessage("commandResponse", response.result);
-        safari.extension.dispatchMessage("commandResponse", resultResponse);
+//        const resultResponse = {
+//            "base_url": response.base_url,
+//            "convert_to": response.convert_to,
+//            "html": response.html,
+//            "name": response.name,
+//            "title": response.title,
+//            "url": response.url
+//        }
+        safari.extension.dispatchMessage("commandResponse", response);
+        //safari.extension.dispatchMessage("commandResponse", resultResponse);
     }
 }
 

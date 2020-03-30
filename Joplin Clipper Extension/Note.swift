@@ -9,12 +9,23 @@
 import Foundation
 
 struct Note: Codable {
-    let id: String?
-    let base_url: String?
-    let parent_id: String?
-    let title: String?
-    let url: String?
-    let body: String?
+    var id: String?
+    var base_url: String?
+    var parent_id: String?
+    var title: String?
+    var url: String?
+    var body: String?
+    var body_html: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case base_url
+        case parent_id
+        case title
+        case url = "source_url"
+        case body
+        case body_html
+    }
 }
 
 extension Note {
@@ -25,6 +36,7 @@ extension Note {
         self.base_url = ""
         self.parent_id = ""
         self.body = ""
+        self.body_html = ""
     }
 
     init(title: String, url: String, parent: String) {
@@ -34,5 +46,6 @@ extension Note {
         self.id = ""
         self.base_url = ""
         self.body = ""
+        self.body_html = ""
     }
 }

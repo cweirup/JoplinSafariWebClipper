@@ -11,6 +11,17 @@ import SafariServices
 class SafariExtensionViewController: SFSafariExtensionViewController {
     
     var allFolders = [Folder]()
+    var isServerRunning = false {
+        didSet {
+            if (isServerRunning == true) {
+                pageTitleLabel.stringValue = "Server is running!"
+                serverStatusIcon.image = NSImage(named: "led_green")
+            } else {
+                pageTitleLabel.stringValue = "Server is not running!"
+                serverStatusIcon.image = NSImage(named: "led_red")
+            }
+        }
+    }
     
     @IBOutlet weak var pageTitle: NSTextField!
     @IBOutlet weak var pageUrl: NSTextField!
@@ -29,9 +40,18 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
         print("Entered viewWillAppear()")
         super.viewWillAppear()
         checkServerStatus()
-        loadFolders()
-        loadTags()
+        
+        if (isServerRunning) {
+            loadFolders()
+            loadTags()
+        }
+        
+        clearSendStatus()
         loadPageInfo()
+    }
+    
+    func clearSendStatus() {
+        responseStatus.stringValue = ""
     }
     
     @IBAction func clipUrl(_ sender: Any) {
@@ -40,6 +60,7 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
         NSLog("Selected Folder: \(allFolders[folderList.indexOfSelectedItem].id!)")
         
         let noteToSend = Resource<Note>(url: URL(string: "http://localhost:41184/notes")!, method: .post(newNote))
+        
         URLSession.shared.load(noteToSend) { data in
             if let noteId = data?.id {
                 message = "Note created!"
@@ -93,6 +114,7 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
     }
     
     func checkServerStatus() {
+        // THIS NEEDS CLEAN UP TO BETTER HANDLE ERRORS
         let joplinEndpoint: String = "http://localhost:41184/ping"
           NSLog("Entered checkServerStatus method")
           
@@ -110,8 +132,9 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
           guard error == nil else {
             NSLog("error calling GET on /ping. Assume service is not running")
             //NSLog(error!)
-            self.pageTitleLabel.stringValue = "Server is not running!"
-            self.serverStatusIcon.image = NSImage(named: "led_red")
+//            self.pageTitleLabel.stringValue = "Server is not running!"
+//            self.serverStatusIcon.image = NSImage(named: "led_red")
+            self.isServerRunning = false
             return
           }
           guard let responseData = data else {
@@ -127,11 +150,13 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
             NSLog("The response is: " + receivedStatus)
 
             if receivedStatus == "JoplinClipperServer" {
-                self.pageTitleLabel.stringValue = "Server is running!"
-                self.serverStatusIcon.image = NSImage(named: "led_green")
+//                self.pageTitleLabel.stringValue = "Server is running!"
+//                self.serverStatusIcon.image = NSImage(named: "led_green")
+                self.isServerRunning = true
             } else {
-                self.pageTitleLabel.stringValue = "Server is not running!"
-                self.serverStatusIcon.image = NSImage(named: "led_red")
+//                self.pageTitleLabel.stringValue = "Server is not running!"
+//                self.serverStatusIcon.image = NSImage(named: "led_red")
+                self.isServerRunning = false
             }
             
         }

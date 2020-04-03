@@ -1,9 +1,11 @@
-document.addEventListener("DOMContentLoaded", function(event) {
-    // Start listener to receive messages
-    safari.self.addEventListener("message", handleMessage);
-                          
-    safari.extension.dispatchMessage("Hello World!");
-});
+//document.addEventListener("DOMContentLoaded", function(event) {
+//    // Start listener to receive messages
+//    safari.self.addEventListener("message", handleMessage);
+//
+//    // safari.extension.dispatchMessage("Hello World!");
+//});
+
+safari.self.addEventListener("message", handleMessage);
 
 async function handleMessage(event) {
     console.log(event.name);

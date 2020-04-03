@@ -13,15 +13,19 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
     var allFolders = [Folder]()
     var isServerRunning = false {
         didSet {
-            if (isServerRunning == true) {
-                pageTitleLabel.stringValue = "Server is running!"
-                serverStatusIcon.image = NSImage(named: "led_green")
-            } else {
+            folderList.isHidden = !isServerRunning
+            guard isServerRunning else {
                 pageTitleLabel.stringValue = "Server is not running!"
                 serverStatusIcon.image = NSImage(named: "led_red")
+                return
             }
+            pageTitleLabel.stringValue = "Server is running!"
+            serverStatusIcon.image = NSImage(named: "led_green")
+            loadFolders()
         }
     }
+    
+    var selectedFolderIndex = 0
     
     @IBOutlet weak var pageTitle: NSTextField!
     @IBOutlet weak var pageUrl: NSTextField!
@@ -36,18 +40,21 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
         return shared
     }()
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        //self.preferredContentSize = NSMakeSize(self.view.frame.size.width, self.view.frame.size.height);
+    }
+    
     override func viewWillAppear() {
-        print("Entered viewWillAppear()")
         super.viewWillAppear()
-        checkServerStatus()
-        
-        if (isServerRunning) {
-            loadFolders()
-            loadTags()
-        }
-        
         clearSendStatus()
         loadPageInfo()
+        checkServerStatus()
+        
+//        if (isServerRunning) {
+//            loadFolders()
+//            loadTags()
+//        }
     }
     
     func clearSendStatus() {
@@ -55,14 +62,17 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
     }
     
     @IBAction func clipUrl(_ sender: Any) {
-        let newNote = Note(title: pageTitle.stringValue, url: pageUrl.stringValue, parent: allFolders[folderList.indexOfSelectedItem].id ?? "")
+        responseStatus.stringValue = "Processing..."
+        var newNote = Note(title: pageTitle.stringValue, url: pageUrl.stringValue, parent: allFolders[folderList.indexOfSelectedItem].id ?? "")
+        newNote.body_html = pageUrl.stringValue
+        
         var message = ""
         NSLog("Selected Folder: \(allFolders[folderList.indexOfSelectedItem].id!)")
         
         let noteToSend = Resource<Note>(url: URL(string: "http://localhost:41184/notes")!, method: .post(newNote))
         
         URLSession.shared.load(noteToSend) { data in
-            if let noteId = data?.id {
+            if (data?.id) != nil {
                 message = "Note created!"
             } else {
                 message = "Message was not created. Please try again."
@@ -77,12 +87,18 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
     
     @IBAction func clipCompletePage(_ sender: Any) {
         NSLog("In clipCompletePage")
+        responseStatus.stringValue = "Processing..."
         sendCommandToActiveTab(command: ["name": "completePageHtml", "preProcessFor": "markdown"])
     }
     
     @IBAction func clipSimplifiedPage(_ sender: Any) {
         NSLog("In clipSimplifiedPage")
+        responseStatus.stringValue = "Processing..."
         sendCommandToActiveTab(command: ["name": "simplifiedPageHtml"])
+    }
+    
+    @IBAction func selectFolder(_ sender: Any) {
+        selectedFolderIndex = folderList.indexOfSelectedItem
     }
     
     func sendCommandToActiveTab(command: Dictionary<String, String>) {
@@ -149,15 +165,17 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
             }
             NSLog("The response is: " + receivedStatus)
 
-            if receivedStatus == "JoplinClipperServer" {
+            self.isServerRunning = (receivedStatus == "JoplinClipperServer")
+            
+            //if receivedStatus == "JoplinClipperServer" {
 //                self.pageTitleLabel.stringValue = "Server is running!"
 //                self.serverStatusIcon.image = NSImage(named: "led_green")
-                self.isServerRunning = true
-            } else {
+            //    self.isServerRunning = true
+            //} else {
 //                self.pageTitleLabel.stringValue = "Server is not running!"
 //                self.serverStatusIcon.image = NSImage(named: "led_red")
-                self.isServerRunning = false
-            }
+            //    self.isServerRunning = false
+            //}
             
         }
         task.resume()
@@ -170,21 +188,83 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
         // Run code to generate list of notebooks
         folderList.removeAllItems()
         
-        let folders = Resource<[Folder]>(get: URL(string: "http://localhost:41184/folders")!)
         var popupTitles = [String]()
-        URLSession.shared.load(folders) { data in
-            print(data ?? "No Folders")
-            
-            for folder in data! {
-                popupTitles.append(folder.title ?? "")
-            }
-            
-            DispatchQueue.main.async {
-                self.folderList.addItems(withTitles: popupTitles)
-                self.allFolders = data ?? []
-                NSLog("Folders: \(self.allFolders)")
-            }
+        
+        let joplinEndpoint: String = "http://localhost:41184/folders"
+        guard let joplinURL = URL(string: joplinEndpoint) else {
+            NSLog("Error: cannot create URL")
+            return
         }
+        
+        var joplinUrlRequest = URLRequest(url: joplinURL)
+        joplinUrlRequest.httpMethod = "GET"
+
+        let session = URLSession.shared
+
+        let task = session.dataTask(with: joplinUrlRequest) { (data, response, error) in
+            guard error == nil else {
+                NSLog("error calling GET on /ping. Assume service is not running")
+                    //NSLog(error!)
+        //            self.pageTitleLabel.stringValue = "Server is not running!"
+        //            self.serverStatusIcon.image = NSImage(named: "led_red")
+                self.isServerRunning = false
+                return
+            }
+              guard let responseData = data else {
+                NSLog("Error: did not receive data")
+                return
+              }
+            
+              // parse the result as String, since that's what the API provides
+                guard let folders = try? JSONDecoder().decode([Folder].self, from: responseData) else {
+                    NSLog("Count not parse server status from response.")
+                    return
+                }
+                //NSLog("The response is: " + receivedStatus)
+
+                for folder in folders {
+                    popupTitles.append(folder.title ?? "")
+                }
+                
+                DispatchQueue.main.async {
+                    self.folderList.addItems(withTitles: popupTitles)
+                    //self.folderList.selectItem(at: self.selectedFolderIndex)
+                    self.allFolders = folders
+                    //NSLog("Folders: \(self.allFolders)")
+                }
+                    
+            self.loadTags()
+                    
+                    //if receivedStatus == "JoplinClipperServer" {
+        //                self.pageTitleLabel.stringValue = "Server is running!"
+        //                self.serverStatusIcon.image = NSImage(named: "led_green")
+                      //  self.isServerRunning = true
+                    //} else {
+        //                self.pageTitleLabel.stringValue = "Server is not running!"
+        //                self.serverStatusIcon.image = NSImage(named: "led_red")
+                   //     self.isServerRunning = false
+                    //}
+                    
+                }
+                task.resume()
+
+//        
+//        let folders = Resource<[Folder]>(get: URL(string: "http://localhost:41184/folders")!)
+//        var popupTitles = [String]()
+//        URLSession.shared.load(folders) { data in
+//            print(data ?? "No Folders")
+//            
+//            for folder in data! {
+//                popupTitles.append(folder.title ?? "")
+//            }
+//            
+//            //DispatchQueue.main.async {
+//            self.folderList.addItems(withTitles: popupTitles)
+//                //self.folderList.selectItem(at: self.selectedFolderIndex)
+//            self.allFolders = data ?? []
+//            NSLog("Folders: \(self.allFolders)")
+//            //}
+//        }
     }
     
     func loadTags() {

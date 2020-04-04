@@ -17,8 +17,13 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
                         //NSLog("The extension received a message (\(messageName)) from a script injected into (\(String(describing: properties?.url))) with userInfo (\(userInfo ?? [:]))")
                         
                 let parentId = SafariExtensionViewController.shared.allFolders[SafariExtensionViewController.shared.folderList.indexOfSelectedItem].id ?? ""
-                let newNote = Note(id: "", base_url: userInfo?["base_url"] as? String, parent_id: parentId, title: userInfo?["title"] as? String, url: (userInfo?["url"] as! String), body: "", body_html: userInfo?["html"] as? String)
-    
+                //let newNote = Note(id: "", base_url: userInfo?["base_url"] as? String, parent_id: parentId, title: userInfo?["title"] as? String, url: (userInfo?["url"] as! String), body: "", body_html: userInfo?["html"] as? String)
+                
+                let title = SafariExtensionViewController.shared.pageTitle.stringValue
+                let url = SafariExtensionViewController.shared.pageUrl.stringValue
+                
+                let newNote = Note(id: "", base_url: userInfo?["base_url"] as? String, parent_id: parentId, title: title, url: url, body: "", body_html: userInfo?["html"] as? String)
+                
                 //let newNote = Note(title: userInfo?["title"] as! String, url: userInfo?["url"] as! String)
                 //NSLog(newNote.title!)
                 var message = ""

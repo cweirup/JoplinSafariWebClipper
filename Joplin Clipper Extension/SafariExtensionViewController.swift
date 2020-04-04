@@ -13,14 +13,17 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
     var allFolders = [Folder]()
     var isServerRunning = false {
         didSet {
-            folderList.isHidden = !isServerRunning
+            folderList.isEnabled = isServerRunning
+            setButtonsEnabledStatus(to: isServerRunning)
             guard isServerRunning else {
                 pageTitleLabel.stringValue = "Server is not running!"
                 serverStatusIcon.image = NSImage(named: "led_red")
+                //setButtonsEnabledStatus(to: false)
                 return
             }
             pageTitleLabel.stringValue = "Server is running!"
             serverStatusIcon.image = NSImage(named: "led_green")
+            //setButtonsEnabledStatus(to: true)
             loadFolders()
         }
     }
@@ -33,6 +36,10 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
     @IBOutlet weak var serverStatusIcon: NSImageView!
     @IBOutlet weak var folderList: NSPopUpButton!
     @IBOutlet weak var responseStatus: NSTextField!
+    
+    @IBOutlet weak var clipUrlButton: NSButton!
+    @IBOutlet weak var clipCompletePageButton: NSButton!
+    @IBOutlet weak var clipSimplifiedPageButton: NSButton!
     
     static let shared: SafariExtensionViewController = {
         let shared = SafariExtensionViewController()
@@ -59,6 +66,12 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
     
     func clearSendStatus() {
         responseStatus.stringValue = ""
+    }
+    
+    private func setButtonsEnabledStatus(to status: Bool) {
+        clipUrlButton.isEnabled = status
+        clipCompletePageButton.isEnabled = status
+        clipSimplifiedPageButton.isEnabled = status
     }
     
     @IBAction func clipUrl(_ sender: Any) {

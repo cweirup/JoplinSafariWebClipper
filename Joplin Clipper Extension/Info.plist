@@ -32,6 +32,14 @@
 		<array>
 			<dict>
 				<key>Script</key>
+				<string>Readability-readerable.js</string>
+			</dict>
+			<dict>
+				<key>Script</key>
+				<string>Readability.js</string>
+			</dict>
+			<dict>
+				<key>Script</key>
 				<string>script.js</string>
 			</dict>
 		</array>

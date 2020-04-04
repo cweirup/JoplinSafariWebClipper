@@ -8,6 +8,9 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SafariExtensionViewController" customModule="Joplin_Clipper_Extension" customModuleProvider="target">
             <connections>
+                <outlet property="clipCompletePageButton" destination="hAd-AB-Qcr" id="8DK-x4-wgg"/>
+                <outlet property="clipSimplifiedPageButton" destination="5oW-2W-uyf" id="Yrh-C5-wnS"/>
+                <outlet property="clipUrlButton" destination="qXD-S3-jAc" id="BRv-ZU-dWD"/>
                 <outlet property="folderList" destination="YnP-Gi-dPX" id="8gz-KY-y92"/>
                 <outlet property="pageTitle" destination="zFF-Cq-MvG" id="ItV-Ou-d3W"/>
                 <outlet property="pageTitleLabel" destination="Evg-xJ-xxc" id="JD2-Xz-O0Z"/>

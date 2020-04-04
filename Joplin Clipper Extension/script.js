@@ -300,6 +300,27 @@ function addSvgClass(doc) {
     }
 }
 
+// NEED TO ADD GET STYLE SHEETS FUNCTION
+
+
+function documentForReadability() {
+    // Readability directly change the passed document so clone it so as
+    // to preserve the original web page.
+    return document.cloneNode(true);
+}
+
+function readabilityProcess() {
+    // eslint-disable-next-line no-undef
+    const readability = new Readability(documentForReadability());
+    const article = readability.parse();
+
+    if (!article) throw new Error('Could not parse HTML document with Readability');
+
+    return {
+        title: article.title,
+        body: article.content,
+    };
+}
 
 async function prepareCommandResponse(command) {
     console.log('Got command: ${command.name}');

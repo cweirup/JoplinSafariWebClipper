@@ -58,12 +58,18 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
         loadPageInfo()
         checkServerStatus()
         
+        
 //        if (isServerRunning) {
 //            loadFolders()
 //            loadTags()
 //        }
     }
     
+    override func viewWillDisappear() {
+        super.viewWillDisappear()
+        let defaults = UserDefaults.standard
+        defaults.set(folderList.indexOfSelectedItem, forKey: "selectedFolderIndex")
+    }
     func clearSendStatus() {
         responseStatus.stringValue = ""
     }
@@ -243,6 +249,8 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
                     self.folderList.addItems(withTitles: popupTitles)
                     //self.folderList.selectItem(at: self.selectedFolderIndex)
                     self.allFolders = folders
+                    let defaults = UserDefaults.standard
+                    self.folderList.selectItem(at: defaults.integer(forKey: "selectedFolderIndex"))
                     //NSLog("Folders: \(self.allFolders)")
                 }
                     

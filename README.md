@@ -6,11 +6,11 @@ This is an Safari App Extension for a Joplin Web Clipper. While there are extens
 ## Working
 * Clip URL
 * Clip Complete Page (to Markdown)
+* Clip Simplified Page
 * Folder Selector (although it forgets the last used folder each time)
-* Server Status Check (although there is an error if the server is down)
+* Server Status Check
 
 ## Not Working/Missing
-* Clip Simplified Page
 * Clip Selection
 * Clip Complete Page (to HTML)
 * Clip Image Capture

@@ -21,8 +21,9 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
                 
                 let title = SafariExtensionViewController.shared.pageTitle.stringValue
                 let url = SafariExtensionViewController.shared.pageUrl.stringValue
+                let tags = SafariExtensionViewController.shared.tagList.stringValue
                 
-                let newNote = Note(id: "", base_url: userInfo?["base_url"] as? String, parent_id: parentId, title: title, url: url, body: "", body_html: userInfo?["html"] as? String)
+                let newNote = Note(id: "", base_url: userInfo?["base_url"] as? String, parent_id: parentId, title: title, url: url, body: "", body_html: userInfo?["html"] as? String, tags: tags)
                 
                 //let newNote = Note(title: userInfo?["title"] as! String, url: userInfo?["url"] as! String)
                 //NSLog(newNote.title!)
@@ -39,6 +40,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     
                     DispatchQueue.main.async {
                         SafariExtensionViewController.shared.responseStatus.stringValue = message
+                        SafariExtensionViewController.shared.tagList.stringValue = ""
                     }
                 }
             }

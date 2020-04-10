@@ -16,6 +16,7 @@ struct Note: Codable {
     var url: String?
     var body: String?
     var body_html: String?
+    var tags: String?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -25,6 +26,7 @@ struct Note: Codable {
         case url = "source_url"
         case body
         case body_html
+        case tags
     }
 }
 
@@ -37,6 +39,7 @@ extension Note {
         self.parent_id = ""
         self.body = ""
         self.body_html = ""
+        self.tags = ""
     }
 
     init(title: String, url: String, parent: String) {
@@ -47,5 +50,6 @@ extension Note {
         self.base_url = ""
         self.body = ""
         self.body_html = ""
+        self.tags = ""
     }
 }

@@ -1,14 +1,14 @@
 //
-//  Folder.swift
+//  Tag.swift
 //  Joplin Clipper Extension
 //
-//  Created by Christopher Weirup on 2020-03-21.
+//  Created by Christopher Weirup on 2020-04-06.
 //  Copyright © 2020 Christopher Weirup. All rights reserved.
 //
 
 import Foundation
 
-struct Folder: Codable {
+struct Tag: Codable {
     let id: String?
     let title: String?
     let created_time: Int?
@@ -17,12 +17,10 @@ struct Folder: Codable {
     let user_updated_time: Int?
     let encryption_cipher_text: String?
     let encryption_applied: Int?
-    let parent_id: String?
     let is_shared: Int?
 }
 
-struct FoldersResource: APIResource {
-    typealias ModelType = Folder
-    let methodPath = "/folders"
+struct TagsResource: APIResource {
+    typealias ModelType = Tag
+    let methodPath = "/tags"
 }
-

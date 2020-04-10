@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E73B9BF243BBE710022B356 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E73B9BE243BBE710022B356 /* Tag.swift */; };
 		2E740871241C86E70011240B /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E740870241C86E70011240B /* Note.swift */; };
 		2E740873241C89960011240B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E740872241C89960011240B /* Images.xcassets */; };
 		2E95E62D2427090C00F1BDF7 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E95E62C2427090C00F1BDF7 /* NetworkManager.swift */; };
@@ -25,6 +26,7 @@
 		2ECB44BF23ED1C0C001956F7 /* SafariExtensionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ECB44BD23ED1C0C001956F7 /* SafariExtensionViewController.xib */; };
 		2ECB44C223ED1C0C001956F7 /* script.js in Resources */ = {isa = PBXBuildFile; fileRef = 2ECB44C123ED1C0C001956F7 /* script.js */; };
 		2ECB44C423ED1C0C001956F7 /* ToolbarItemIcon.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2ECB44C323ED1C0C001956F7 /* ToolbarItemIcon.pdf */; };
+		2EE19ECB24400FBA00B26799 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE19ECA24400FBA00B26799 /* Network.swift */; };
 		2EEE8B8B2400E30F00F751CC /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2EEE8B8A2400E30F00F751CC /* .gitignore */; };
 		2EEE8B8C2400E30F00F751CC /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2EEE8B8A2400E30F00F751CC /* .gitignore */; };
 		2EEE8B8D2400E31000F751CC /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2EEE8B8A2400E30F00F751CC /* .gitignore */; };
@@ -82,6 +84,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2E73B9BE243BBE710022B356 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		2E740870241C86E70011240B /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		2E740872241C89960011240B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2E95E62C2427090C00F1BDF7 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -108,6 +111,7 @@
 		2ECB44C123ED1C0C001956F7 /* script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = script.js; sourceTree = "<group>"; };
 		2ECB44C323ED1C0C001956F7 /* ToolbarItemIcon.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = ToolbarItemIcon.pdf; sourceTree = "<group>"; };
 		2ECB44C523ED1C0C001956F7 /* Joplin_Clipper_Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Joplin_Clipper_Extension.entitlements; sourceTree = "<group>"; };
+		2EE19ECA24400FBA00B26799 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		2EEE8B8A2400E30F00F751CC /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		2EEE8B902415BF2200F751CC /* JSDOMParser.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = JSDOMParser.js; sourceTree = "<group>"; };
 		2EEE8B912415BF2200F751CC /* Readability-readerable.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "Readability-readerable.js"; sourceTree = "<group>"; };
@@ -225,8 +229,10 @@
 				2ECB44C523ED1C0C001956F7 /* Joplin_Clipper_Extension.entitlements */,
 				2E740870241C86E70011240B /* Note.swift */,
 				2E95E62E2427107000F1BDF7 /* Folder.swift */,
+				2E73B9BE243BBE710022B356 /* Tag.swift */,
 				2E740872241C89960011240B /* Images.xcassets */,
 				2E95E62C2427090C00F1BDF7 /* NetworkManager.swift */,
+				2EE19ECA24400FBA00B26799 /* Network.swift */,
 			);
 			path = "Joplin Clipper Extension";
 			sourceTree = "<group>";
@@ -445,10 +451,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E73B9BF243BBE710022B356 /* Tag.swift in Sources */,
 				2E95E62D2427090C00F1BDF7 /* NetworkManager.swift in Sources */,
 				2E95E62F2427107000F1BDF7 /* Folder.swift in Sources */,
 				2ECB44BC23ED1C0C001956F7 /* SafariExtensionViewController.swift in Sources */,
 				2ECB44BA23ED1C0C001956F7 /* SafariExtensionHandler.swift in Sources */,
+				2EE19ECB24400FBA00B26799 /* Network.swift in Sources */,
 				2E740871241C86E70011240B /* Note.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

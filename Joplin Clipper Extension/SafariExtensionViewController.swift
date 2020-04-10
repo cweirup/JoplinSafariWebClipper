@@ -8,27 +8,29 @@
 
 import SafariServices
 
-class SafariExtensionViewController: SFSafariExtensionViewController {
+class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFieldDelegate {
     
     var allFolders = [Folder]()
     var isServerRunning = false {
         didSet {
             folderList.isEnabled = isServerRunning
+            tagList.isEnabled = isServerRunning
             setButtonsEnabledStatus(to: isServerRunning)
             guard isServerRunning else {
                 pageTitleLabel.stringValue = "Server is not running!"
                 serverStatusIcon.image = NSImage(named: "led_red")
-                //setButtonsEnabledStatus(to: false)
                 return
             }
             pageTitleLabel.stringValue = "Server is running!"
             serverStatusIcon.image = NSImage(named: "led_green")
-            //setButtonsEnabledStatus(to: true)
             loadFolders()
         }
     }
     
     var selectedFolderIndex = 0
+    
+    var builtInTagKeywords = [String]()
+    var tagMatches = [String]()
     
     @IBOutlet weak var pageTitle: NSTextField!
     @IBOutlet weak var pageUrl: NSTextField!
@@ -36,6 +38,7 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
     @IBOutlet weak var serverStatusIcon: NSImageView!
     @IBOutlet weak var folderList: NSPopUpButton!
     @IBOutlet weak var responseStatus: NSTextField!
+    @IBOutlet weak var tagList: NSTokenField!
     
     @IBOutlet weak var clipUrlButton: NSButton!
     @IBOutlet weak var clipCompletePageButton: NSButton!
@@ -43,7 +46,7 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
     
     static let shared: SafariExtensionViewController = {
         let shared = SafariExtensionViewController()
-        shared.preferredContentSize = NSSize(width:320, height:273)
+        shared.preferredContentSize = NSSize(width:320, height:344)
         return shared
     }()
     
@@ -57,12 +60,6 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
         clearSendStatus()
         loadPageInfo()
         checkServerStatus()
-        
-        
-//        if (isServerRunning) {
-//            loadFolders()
-//            loadTags()
-//        }
     }
     
     override func viewWillDisappear() {
@@ -82,24 +79,30 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
     
     @IBAction func clipUrl(_ sender: Any) {
         responseStatus.stringValue = "Processing..."
+        
         var newNote = Note(title: pageTitle.stringValue, url: pageUrl.stringValue, parent: allFolders[folderList.indexOfSelectedItem].id ?? "")
         newNote.body_html = pageUrl.stringValue
+        newNote.tags = tagList.stringValue
         
         var message = ""
-        NSLog("Selected Folder: \(allFolders[folderList.indexOfSelectedItem].id!)")
         
-        let noteToSend = Resource<Note>(url: URL(string: "http://localhost:41184/notes")!, method: .post(newNote))
-        
-        URLSession.shared.load(noteToSend) { data in
-            if (data?.id) != nil {
-                message = "Note created!"
-            } else {
-                message = "Message was not created. Please try again."
+        Network.post(url: URL(string: "http://localhost:41184/notes")!, object: newNote) { (data, error) in
+            if let _data = data {
+                guard let confirmedNote = try? JSONDecoder().decode(Note.self, from: _data) else {
+                    NSLog("Count not parse server status from response.")
+                    return
+                }
+                if (confirmedNote.id) != nil {
+                    message = "Note created!"
+                } else {
+                    message = "Message was not created. Please try again."
+                }
+                
+                //DispatchQueue.main.async {
+                    self.responseStatus.stringValue = message
+                //}
             }
             
-            DispatchQueue.main.async {
-                self.responseStatus.stringValue = message
-            }
         }
 
     }
@@ -149,58 +152,17 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
     }
     
     func checkServerStatus() {
-        // THIS NEEDS CLEAN UP TO BETTER HANDLE ERRORS
         let joplinEndpoint: String = "http://localhost:41184/ping"
-          NSLog("Entered checkServerStatus method")
-          
-        guard let joplinURL = URL(string: joplinEndpoint) else {
-          NSLog("Error: cannot create URL")
-          return
-        }
-        var joplinUrlRequest = URLRequest(url: joplinURL)
-        joplinUrlRequest.httpMethod = "GET"
-
-        let session = URLSession.shared
-
-        let task = session.dataTask(with: joplinUrlRequest) {
-          (data, response, error) in
-          guard error == nil else {
-            NSLog("error calling GET on /ping. Assume service is not running")
-            //NSLog(error!)
-//            self.pageTitleLabel.stringValue = "Server is not running!"
-//            self.serverStatusIcon.image = NSImage(named: "led_red")
-            self.isServerRunning = false
-            return
-          }
-          guard let responseData = data else {
-            NSLog("Error: did not receive data")
-            return
-          }
         
-          // parse the result as String, since that's what the API provides
-            guard let receivedStatus = String(data: responseData, encoding: .utf8) else {
-                NSLog("Count not parse server status from response.")
-                return
-            }
-            NSLog("The response is: " + receivedStatus)
-
-            self.isServerRunning = (receivedStatus == "JoplinClipperServer")
-            
-            //if receivedStatus == "JoplinClipperServer" {
-//                self.pageTitleLabel.stringValue = "Server is running!"
-//                self.serverStatusIcon.image = NSImage(named: "led_green")
-            //    self.isServerRunning = true
-            //} else {
-//                self.pageTitleLabel.stringValue = "Server is not running!"
-//                self.serverStatusIcon.image = NSImage(named: "led_red")
-            //    self.isServerRunning = false
-            //}
-            
-        }
-        task.resume()
-
-        
-        //self.pageTitleLabel.stringValue = pageProperties?.title ?? ""
+        Network.get(url: joplinEndpoint) { (data, error) in
+              if let _data = data {
+                  guard let receivedStatus = String(data: _data, encoding: .utf8) else {
+                      NSLog("Count not parse server status from response.")
+                      return
+                  }
+                  self.isServerRunning = (receivedStatus == "JoplinClipperServer")
+              }
+          }
     }
 
     func loadFolders() {
@@ -256,16 +218,6 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
                     
             self.loadTags()
                     
-                    //if receivedStatus == "JoplinClipperServer" {
-        //                self.pageTitleLabel.stringValue = "Server is running!"
-        //                self.serverStatusIcon.image = NSImage(named: "led_green")
-                      //  self.isServerRunning = true
-                    //} else {
-        //                self.pageTitleLabel.stringValue = "Server is not running!"
-        //                self.serverStatusIcon.image = NSImage(named: "led_red")
-                   //     self.isServerRunning = false
-                    //}
-                    
                 }
                 task.resume()
 
@@ -290,5 +242,57 @@ class SafariExtensionViewController: SFSafariExtensionViewController {
     
     func loadTags() {
         // Run code to generate list of tags
+        builtInTagKeywords.removeAll()
+
+        let joplinEndpoint: String = "http://localhost:41184/tags"
+          
+        guard let joplinURL = URL(string: joplinEndpoint) else {
+          NSLog("Error: cannot create URL")
+          return
+        }
+        var joplinUrlRequest = URLRequest(url: joplinURL)
+        joplinUrlRequest.httpMethod = "GET"
+
+        let session = URLSession.shared
+
+        let task = session.dataTask(with: joplinUrlRequest) {
+          (data, response, error) in
+          guard error == nil else {
+            NSLog("error calling GET on /tags. Assume service is not running")
+
+            //self.isServerRunning = false
+            return
+          }
+          guard let responseData = data else {
+            NSLog("Error: did not receive data")
+            return
+          }
+        
+          // parse the result as String, since that's what the API provides
+            guard let tags = try? JSONDecoder().decode([Tag].self, from: responseData) else {
+                NSLog("Count not parse tags list from response.")
+                return
+            }
+
+            DispatchQueue.main.async {
+                for tag in tags {
+                    //print("Tag found: \(tag.title ?? "") - ID \(tag.id ?? "No ID")")
+                    self.builtInTagKeywords.append(tag.title ?? "")
+                }
+                print(self.builtInTagKeywords)
+            }
+
+        }
+        task.resume()
+    }
+    
+    // MARK: - NSTokenFieldDelegate methods
+    func tokenField(_ tokenField: NSTokenField, completionsForSubstring substring: String, indexOfToken tokenIndex: Int, indexOfSelectedItem selectedIndex: UnsafeMutablePointer<Int>?) -> [Any]? {
+        
+        tagMatches = builtInTagKeywords.filter { keyword in
+            return keyword.lowercased().hasPrefix(substring.lowercased())
+        }
+
+        return tagMatches;
     }
 }

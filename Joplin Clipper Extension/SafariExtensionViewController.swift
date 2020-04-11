@@ -32,6 +32,9 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
     var builtInTagKeywords = [String]()
     var tagMatches = [String]()
     
+    let foldersResource = FoldersResource()
+    let tagsResource = TagsResource()
+    
     @IBOutlet weak var pageTitle: NSTextField!
     @IBOutlet weak var pageUrl: NSTextField!
     @IBOutlet weak var pageTitleLabel: NSTextField!
@@ -50,11 +53,6 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
         return shared
     }()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        //self.preferredContentSize = NSMakeSize(self.view.frame.size.width, self.view.frame.size.height);
-    }
-    
     override func viewWillAppear() {
         super.viewWillAppear()
         clearSendStatus()
@@ -64,9 +62,15 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
     
     override func viewWillDisappear() {
         super.viewWillDisappear()
+        
+        // Save the currently selected folder
         let defaults = UserDefaults.standard
         defaults.set(folderList.indexOfSelectedItem, forKey: "selectedFolderIndex")
+        
+        // Clear out the Tags - This will mimic the behavior of the Chrome/Firefox extension
+        tagList.stringValue = ""
     }
+    
     func clearSendStatus() {
         responseStatus.stringValue = ""
     }
@@ -98,9 +102,7 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
                     message = "Message was not created. Please try again."
                 }
                 
-                //DispatchQueue.main.async {
-                    self.responseStatus.stringValue = message
-                //}
+                self.responseStatus.stringValue = message
             }
             
         }
@@ -165,61 +167,92 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
           }
     }
 
+    private func loadFoldersIntoPopup(folders: [Folder], indent: Int = 0) {
+        for folder in folders {
+            // Initially setting the popup item to 'BLANK' then setting the title
+            // This allows us to have duplicate notebook/folder titles in the dropdown list
+            // Just using .addItem removes any duplicates
+            self.folderList.addItem(withTitle: "BLANK")
+            self.folderList.lastItem?.title = (folder.title ?? "")
+            self.folderList.lastItem?.indentationLevel = indent
+            self.allFolders.append(folder)
+            if folder.children != nil {
+                loadFoldersIntoPopup(folders: folder.children!, indent: (indent+1))
+            }
+        }
+    }
+    
     func loadFolders() {
         // Run code to generate list of notebooks
         folderList.removeAllItems()
-        
-        var popupTitles = [String]()
-        
-        let joplinEndpoint: String = "http://localhost:41184/folders"
-        guard let joplinURL = URL(string: joplinEndpoint) else {
-            NSLog("Error: cannot create URL")
-            return
-        }
-        
-        var joplinUrlRequest = URLRequest(url: joplinURL)
-        joplinUrlRequest.httpMethod = "GET"
 
-        let session = URLSession.shared
-
-        let task = session.dataTask(with: joplinUrlRequest) { (data, response, error) in
-            guard error == nil else {
-                NSLog("error calling GET on /ping. Assume service is not running")
-                    //NSLog(error!)
-        //            self.pageTitleLabel.stringValue = "Server is not running!"
-        //            self.serverStatusIcon.image = NSImage(named: "led_red")
-                self.isServerRunning = false
-                return
-            }
-              guard let responseData = data else {
-                NSLog("Error: did not receive data")
-                return
-              }
-            
-              // parse the result as String, since that's what the API provides
-                guard let folders = try? JSONDecoder().decode([Folder].self, from: responseData) else {
-                    NSLog("Count not parse server status from response.")
-                    return
-                }
-                //NSLog("The response is: " + receivedStatus)
-
-                for folder in folders {
-                    popupTitles.append(folder.title ?? "")
-                }
+        Network.get(url: foldersResource.url.absoluteString) { (data, error) in
+            if let _data = data {
                 
-                DispatchQueue.main.async {
-                    self.folderList.addItems(withTitles: popupTitles)
-                    //self.folderList.selectItem(at: self.selectedFolderIndex)
-                    self.allFolders = folders
+                let jsonData = NSString(data: _data, encoding: String.Encoding.utf8.rawValue)
+                NSLog("Data from loadFolders = \(String(describing: jsonData))")
+                
+                if let folders = try? JSONDecoder().decode([Folder].self, from: _data) {
+                    self.loadFoldersIntoPopup(folders: folders, indent: 0)
+
                     let defaults = UserDefaults.standard
                     self.folderList.selectItem(at: defaults.integer(forKey: "selectedFolderIndex"))
-                    //NSLog("Folders: \(self.allFolders)")
                 }
-                    
+            }
+            
             self.loadTags()
-                    
-                }
-                task.resume()
+        }
+
+        
+//        let joplinEndpoint: String = "http://localhost:41184/folders"
+//        guard let joplinURL = URL(string: joplinEndpoint) else {
+//            NSLog("Error: cannot create URL")
+//            return
+//        }
+//
+//        var joplinUrlRequest = URLRequest(url: joplinURL)
+//        joplinUrlRequest.httpMethod = "GET"
+//
+//        let session = URLSession.shared
+//
+//        let task = session.dataTask(with: joplinUrlRequest) { (data, response, error) in
+//            guard error == nil else {
+//                NSLog("error calling GET on /ping. Assume service is not running")
+//                    //NSLog(error!)
+//        //            self.pageTitleLabel.stringValue = "Server is not running!"
+//        //            self.serverStatusIcon.image = NSImage(named: "led_red")
+//                self.isServerRunning = false
+//                return
+//            }
+//              guard let responseData = data else {
+//                NSLog("Error: did not receive data")
+//                return
+//              }
+//
+//              // parse the result as String, since that's what the API provides
+//                guard let folders = try? JSONDecoder().decode([Folder].self, from: responseData) else {
+//                    NSLog("Count not parse server status from response.")
+//                    return
+//                }
+//                //NSLog("The response is: " + receivedStatus)
+//
+//                for folder in folders {
+//                    popupTitles.append(folder.title ?? "")
+//                }
+//
+//                DispatchQueue.main.async {
+//                    self.folderList.addItems(withTitles: popupTitles)
+//                    //self.folderList.selectItem(at: self.selectedFolderIndex)
+//                    self.allFolders = folders
+//                    let defaults = UserDefaults.standard
+//                    self.folderList.selectItem(at: defaults.integer(forKey: "selectedFolderIndex"))
+//                    //NSLog("Folders: \(self.allFolders)")
+//                }
+//
+//            self.loadTags()
+//
+//                }
+//                task.resume()
 
 //        
 //        let folders = Resource<[Folder]>(get: URL(string: "http://localhost:41184/folders")!)
@@ -244,46 +277,56 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
         // Run code to generate list of tags
         builtInTagKeywords.removeAll()
 
-        let joplinEndpoint: String = "http://localhost:41184/tags"
-          
-        guard let joplinURL = URL(string: joplinEndpoint) else {
-          NSLog("Error: cannot create URL")
-          return
-        }
-        var joplinUrlRequest = URLRequest(url: joplinURL)
-        joplinUrlRequest.httpMethod = "GET"
-
-        let session = URLSession.shared
-
-        let task = session.dataTask(with: joplinUrlRequest) {
-          (data, response, error) in
-          guard error == nil else {
-            NSLog("error calling GET on /tags. Assume service is not running")
-
-            //self.isServerRunning = false
-            return
-          }
-          guard let responseData = data else {
-            NSLog("Error: did not receive data")
-            return
-          }
-        
-          // parse the result as String, since that's what the API provides
-            guard let tags = try? JSONDecoder().decode([Tag].self, from: responseData) else {
-                NSLog("Count not parse tags list from response.")
-                return
-            }
-
-            DispatchQueue.main.async {
-                for tag in tags {
-                    //print("Tag found: \(tag.title ?? "") - ID \(tag.id ?? "No ID")")
-                    self.builtInTagKeywords.append(tag.title ?? "")
+        Network.get(url: tagsResource.url.absoluteString) { (data, error) in
+            if let _data = data {
+                if let tags = try? JSONDecoder().decode([Tag].self, from: _data) {
+                    for tag in tags {
+                        self.builtInTagKeywords.append(tag.title ?? "")
+                    }
                 }
-                print(self.builtInTagKeywords)
             }
-
         }
-        task.resume()
+        
+//        let joplinEndpoint: String = "http://localhost:41184/tags"
+//
+//        guard let joplinURL = URL(string: joplinEndpoint) else {
+//          NSLog("Error: cannot create URL")
+//          return
+//        }
+//        var joplinUrlRequest = URLRequest(url: joplinURL)
+//        joplinUrlRequest.httpMethod = "GET"
+//
+//        let session = URLSession.shared
+//
+//        let task = session.dataTask(with: joplinUrlRequest) {
+//          (data, response, error) in
+//          guard error == nil else {
+//            NSLog("error calling GET on /tags. Assume service is not running")
+//
+//            //self.isServerRunning = false
+//            return
+//          }
+//          guard let responseData = data else {
+//            NSLog("Error: did not receive data")
+//            return
+//          }
+//
+//          // parse the result as String, since that's what the API provides
+//            guard let tags = try? JSONDecoder().decode([Tag].self, from: responseData) else {
+//                NSLog("Count not parse tags list from response.")
+//                return
+//            }
+//
+//            DispatchQueue.main.async {
+//                for tag in tags {
+//                    //print("Tag found: \(tag.title ?? "") - ID \(tag.id ?? "No ID")")
+//                    self.builtInTagKeywords.append(tag.title ?? "")
+//                }
+//                print(self.builtInTagKeywords)
+//            }
+//
+//        }
+//        task.resume()
     }
     
     // MARK: - NSTokenFieldDelegate methods

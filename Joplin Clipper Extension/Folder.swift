@@ -18,6 +18,7 @@ struct Folder: Codable {
     let encryption_cipher_text: String?
     let encryption_applied: Int?
     let parent_id: String?
+    let children: [Folder]?
     let is_shared: Int?
 }
 

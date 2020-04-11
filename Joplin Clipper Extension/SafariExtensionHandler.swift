@@ -14,10 +14,17 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
         // This method will be called when a content script provided by your extension calls safari.extension.dispatchMessage("message").
         if messageName == "commandResponse" {
             page.getPropertiesWithCompletionHandler { properties in
-                        //NSLog("The extension received a message (\(messageName)) from a script injected into (\(String(describing: properties?.url))) with userInfo (\(userInfo ?? [:]))")
-                        
+                // HACK TO FIX ISSUE WITH CAPTURING IFRAME CONTENT
+                // Safari App Extensions appear to load content scripts into the top frame and all sub-frames/iframes
+                // This is causing all of that content to get returned for pages with iframes.
+                // This hack will check to see if the returned URL matches what we have.
+                // If not, we'll exit out
+                guard (SafariExtensionViewController.shared.pageUrl.stringValue == userInfo?["url"] as? String) else {
+                    return
+                }
+                
+                // Folder to store the note
                 let parentId = SafariExtensionViewController.shared.allFolders[SafariExtensionViewController.shared.folderList.indexOfSelectedItem].id ?? ""
-                //let newNote = Note(id: "", base_url: userInfo?["base_url"] as? String, parent_id: parentId, title: userInfo?["title"] as? String, url: (userInfo?["url"] as! String), body: "", body_html: userInfo?["html"] as? String)
                 
                 let title = SafariExtensionViewController.shared.pageTitle.stringValue
                 let url = SafariExtensionViewController.shared.pageUrl.stringValue
@@ -26,11 +33,11 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
                 let newNote = Note(id: "", base_url: userInfo?["base_url"] as? String, parent_id: parentId, title: title, url: url, body: "", body_html: userInfo?["html"] as? String, tags: tags)
                 
                 //let newNote = Note(title: userInfo?["title"] as! String, url: userInfo?["url"] as! String)
-                //NSLog(newNote.title!)
+                NSLog(newNote.title!)
                 var message = ""
     
                 let noteToSend = Resource<Note>(url: URL(string: "http://localhost:41184/notes")!, method: .post(newNote))
-                //NSLog(String(data: noteToSend.urlRequest.httpBody!, encoding: .utf8)!)
+                NSLog(String(data: noteToSend.urlRequest.httpBody!, encoding: .utf8)!)
                 URLSession.shared.load(noteToSend) { data in
                     if (data?.id) != nil {
                         message = "Note created!"
@@ -40,35 +47,11 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     
                     DispatchQueue.main.async {
                         SafariExtensionViewController.shared.responseStatus.stringValue = message
-                        SafariExtensionViewController.shared.tagList.stringValue = ""
+                        //SafariExtensionViewController.shared.tagList.stringValue = ""
                     }
                 }
             }
         }
-//        page.getPropertiesWithCompletionHandler { properties in
-//            NSLog("The extension received a message (\(messageName)) from a script injected into (\(String(describing: properties?.url))) with userInfo (\(userInfo ?? [:]))")
-            
-//            let parentId = SafariExtensionViewController.shared.allFolders[SafariExtensionViewController.shared.folderList.indexOfSelectedItem].id ?? ""
-//            let newNote = Note(id: "", base_url: userInfo?["base_url"] as? String, parent_id: parentId, title: userInfo?["title"] as? String, url: (userInfo?["url"] as! String), body: "", body_html: userInfo?["html"] as? String)
-//
-//            //let newNote = Note(title: userInfo?["title"] as! String, url: userInfo?["url"] as! String)
-//            //NSLog(newNote.title!)
-//            var message = ""
-//
-//            let noteToSend = Resource<Note>(url: URL(string: "http://localhost:41184/notes")!, method: .post(newNote))
-//            //NSLog(String(data: noteToSend.urlRequest.httpBody!, encoding: .utf8)!)
-//            URLSession.shared.load(noteToSend) { data in
-//                if (data?.id) != nil {
-//                    message = "Note created!"
-//                } else {
-//                    message = "Message was not created. Please try again."
-//                }
-//
-//                DispatchQueue.main.async {
-//                    SafariExtensionViewController.shared.responseStatus.stringValue = message
-//                }
-//            }
-//        }
     }
     
     override func toolbarItemClicked(in window: SFSafariWindow) {

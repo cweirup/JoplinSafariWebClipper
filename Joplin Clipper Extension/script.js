@@ -8,9 +8,10 @@
 safari.self.addEventListener("message", handleMessage);
 
 async function handleMessage(event) {
-    console.log(event.name);
-    console.log(event.message);
-    console.log(event.message.name);
+    //console.log(event.name);
+    console.log("Command: " + event.message);
+    console.log("Accessed from: " + window.location.href)
+    //console.log(event.message.name);
     
     if (event.name == "command") {
         // Execute the command

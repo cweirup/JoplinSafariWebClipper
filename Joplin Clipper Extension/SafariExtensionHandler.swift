@@ -14,15 +14,6 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
         // This method will be called when a content script provided by your extension calls safari.extension.dispatchMessage("message").
         if messageName == "commandResponse" {
             page.getPropertiesWithCompletionHandler { properties in
-                // HACK TO FIX ISSUE WITH CAPTURING IFRAME CONTENT
-                // Safari App Extensions appear to load content scripts into the top frame and all sub-frames/iframes
-                // This is causing all of that content to get returned for pages with iframes.
-                // This hack will check to see if the returned URL matches what we have.
-                // If not, we'll exit out
-                guard (SafariExtensionViewController.shared.pageUrl.stringValue == userInfo?["url"] as? String) else {
-                    return
-                }
-                
                 // Folder to store the note
                 let parentId = SafariExtensionViewController.shared.allFolders[SafariExtensionViewController.shared.folderList.indexOfSelectedItem].id ?? ""
                 

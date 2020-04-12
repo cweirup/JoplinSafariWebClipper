@@ -1,19 +1,23 @@
-# Joplin Safari Web Clipper
-This is an Safari App Extension for a Joplin Web Clipper. While there are extensions for Chrome and Firefox, with the new "native" approach for Safari extensions, a web clipper did not exist. This is my attempt at making one.
+# Joplin Web Clipper for Safari
+This is an Safari App Extension for a Joplin Web Clipper.
 
-**Please note** - This is very much **ALPHA** quality code at this point. Much of it doesn't work.
+[Joplin](https://joplinapp.org "Joplin Homepage") is an open-source note taking and to-do application. It includes browser extensions for Chrome and Firefox that allows you to clip the current page/tab into Joplin. This extension is built with Javascript and React.
+
+However, Safari now requires extensions that are at least partially based on native code (Swift or Objective-C) and must be initally run from a Mac app. This means the Web Clipper included with Joplin will not work. There is currently no Safari App Extension that I am aware of. This is my attempt at making one.
+
+Please note that this is very much **ALPHA** quality code at this point. The core functionality works for normal day-to-day usages, but you will find bugs and issues.
 
 ## Working
 * Clip URL
 * Clip Complete Page (to Markdown)
 * Clip Simplified Page
-* Folder Selector (although it forgets the last used folder each time)
+* Folder Selector (now remembers last folder used and supports subfolders)
 * Server Status Check
+* Tags
 
 ## Not Working/Missing
 * Clip Selection
 * Clip Complete Page (to HTML)
 * Clip Image Capture
-* Tags
 
-I'm very new at Safari App Extension development, so bear with me as we learn along together!
+I'm new at Safari App Extension development, so bear with me as we learn along together!

@@ -14,10 +14,14 @@ Please note that this is very much **ALPHA** quality code at this point. The cor
 * Folder Selector (now remembers last folder used and supports subfolders)
 * Server Status Check
 * Tags
+* Clip Selection
+  * If you are using Stop the Madness, you will need to allow "Text selection" for "Clip Selection" to work. 
 
 ## Not Working/Missing
-* Clip Selection
 * Clip Complete Page (to HTML)
 * Clip Image Capture
 
 I'm new at Safari App Extension development, so bear with me as we learn along together!
+
+## License
+Joplin Web Clipper is available under the MIT license. See the LICENSE.md file for more info.

@@ -35,6 +35,9 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
     let foldersResource = FoldersResource()
     let tagsResource = TagsResource()
     
+    // Used for temporary storage of selection from web page for later saving
+    var tempSelection: String = ""
+    
     @IBOutlet weak var pageTitle: NSTextField!
     @IBOutlet weak var pageUrl: NSTextField!
     @IBOutlet weak var pageTitleLabel: NSTextField!
@@ -46,10 +49,11 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
     @IBOutlet weak var clipUrlButton: NSButton!
     @IBOutlet weak var clipCompletePageButton: NSButton!
     @IBOutlet weak var clipSimplifiedPageButton: NSButton!
+    @IBOutlet weak var clipSelectionButton: NSButton!
     
     static let shared: SafariExtensionViewController = {
         let shared = SafariExtensionViewController()
-        shared.preferredContentSize = NSSize(width:320, height:344)
+        shared.preferredContentSize = NSSize(width:330, height:366)
         return shared
     }()
     
@@ -119,6 +123,13 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
         NSLog("In clipSimplifiedPage")
         responseStatus.stringValue = "Processing..."
         sendCommandToActiveTab(command: ["name": "simplifiedPageHtml"])
+    }
+    
+    @IBAction func clipSelection(_ sender: Any) {
+        NSLog("In clipSelection")
+        responseStatus.stringValue = "Processing..."
+        sendCommandToActiveTab(command: ["name": "selectedHtml"])
+        tempSelection = ""
     }
     
     @IBAction func selectFolder(_ sender: Any) {
@@ -202,75 +213,6 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
             
             self.loadTags()
         }
-
-        
-//        let joplinEndpoint: String = "http://localhost:41184/folders"
-//        guard let joplinURL = URL(string: joplinEndpoint) else {
-//            NSLog("Error: cannot create URL")
-//            return
-//        }
-//
-//        var joplinUrlRequest = URLRequest(url: joplinURL)
-//        joplinUrlRequest.httpMethod = "GET"
-//
-//        let session = URLSession.shared
-//
-//        let task = session.dataTask(with: joplinUrlRequest) { (data, response, error) in
-//            guard error == nil else {
-//                NSLog("error calling GET on /ping. Assume service is not running")
-//                    //NSLog(error!)
-//        //            self.pageTitleLabel.stringValue = "Server is not running!"
-//        //            self.serverStatusIcon.image = NSImage(named: "led_red")
-//                self.isServerRunning = false
-//                return
-//            }
-//              guard let responseData = data else {
-//                NSLog("Error: did not receive data")
-//                return
-//              }
-//
-//              // parse the result as String, since that's what the API provides
-//                guard let folders = try? JSONDecoder().decode([Folder].self, from: responseData) else {
-//                    NSLog("Count not parse server status from response.")
-//                    return
-//                }
-//                //NSLog("The response is: " + receivedStatus)
-//
-//                for folder in folders {
-//                    popupTitles.append(folder.title ?? "")
-//                }
-//
-//                DispatchQueue.main.async {
-//                    self.folderList.addItems(withTitles: popupTitles)
-//                    //self.folderList.selectItem(at: self.selectedFolderIndex)
-//                    self.allFolders = folders
-//                    let defaults = UserDefaults.standard
-//                    self.folderList.selectItem(at: defaults.integer(forKey: "selectedFolderIndex"))
-//                    //NSLog("Folders: \(self.allFolders)")
-//                }
-//
-//            self.loadTags()
-//
-//                }
-//                task.resume()
-
-//        
-//        let folders = Resource<[Folder]>(get: URL(string: "http://localhost:41184/folders")!)
-//        var popupTitles = [String]()
-//        URLSession.shared.load(folders) { data in
-//            print(data ?? "No Folders")
-//            
-//            for folder in data! {
-//                popupTitles.append(folder.title ?? "")
-//            }
-//            
-//            //DispatchQueue.main.async {
-//            self.folderList.addItems(withTitles: popupTitles)
-//                //self.folderList.selectItem(at: self.selectedFolderIndex)
-//            self.allFolders = data ?? []
-//            NSLog("Folders: \(self.allFolders)")
-//            //}
-//        }
     }
     
     func loadTags() {
@@ -287,46 +229,6 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
             }
         }
         
-//        let joplinEndpoint: String = "http://localhost:41184/tags"
-//
-//        guard let joplinURL = URL(string: joplinEndpoint) else {
-//          NSLog("Error: cannot create URL")
-//          return
-//        }
-//        var joplinUrlRequest = URLRequest(url: joplinURL)
-//        joplinUrlRequest.httpMethod = "GET"
-//
-//        let session = URLSession.shared
-//
-//        let task = session.dataTask(with: joplinUrlRequest) {
-//          (data, response, error) in
-//          guard error == nil else {
-//            NSLog("error calling GET on /tags. Assume service is not running")
-//
-//            //self.isServerRunning = false
-//            return
-//          }
-//          guard let responseData = data else {
-//            NSLog("Error: did not receive data")
-//            return
-//          }
-//
-//          // parse the result as String, since that's what the API provides
-//            guard let tags = try? JSONDecoder().decode([Tag].self, from: responseData) else {
-//                NSLog("Count not parse tags list from response.")
-//                return
-//            }
-//
-//            DispatchQueue.main.async {
-//                for tag in tags {
-//                    //print("Tag found: \(tag.title ?? "") - ID \(tag.id ?? "No ID")")
-//                    self.builtInTagKeywords.append(tag.title ?? "")
-//                }
-//                print(self.builtInTagKeywords)
-//            }
-//
-//        }
-//        task.resume()
     }
     
     // MARK: - NSTokenFieldDelegate methods

@@ -12,7 +12,16 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     
     override func messageReceived(withName messageName: String, from page: SFSafariPage, userInfo: [String : Any]?) {
         // This method will be called when a content script provided by your extension calls safari.extension.dispatchMessage("message").
-        if messageName == "commandResponse" {
+        
+        if messageName == "selectedText" {
+            NSLog("In selectedText messageReceived")
+            if let selectedText = userInfo?["text"] {
+                DispatchQueue.main.async {
+                    SafariExtensionViewController.shared.tempSelection = selectedText as! String
+                    //SafariExtensionViewController.shared.tagList.stringValue = ""
+                }
+            }
+        } else if messageName == "commandResponse" {
             page.getPropertiesWithCompletionHandler { properties in
                 // Folder to store the note
                 let parentId = SafariExtensionViewController.shared.allFolders[SafariExtensionViewController.shared.folderList.indexOfSelectedItem].id ?? ""
@@ -42,6 +51,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
                     }
                 }
             }
+            
         }
     }
     
@@ -57,6 +67,15 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     
     override func popoverViewController() -> SFSafariExtensionViewController {
         return SafariExtensionViewController.shared
+    }
+    
+    override func popoverWillShow(in window: SFSafariWindow) {
+        NSLog("In popoverWillShow")
+        window.getActiveTab { activeTab in
+            activeTab?.getActivePage { activePage in
+                activePage?.dispatchMessageToScript(withName: "getSelectedText", userInfo: nil)
+            }
+        }
     }
 
 }

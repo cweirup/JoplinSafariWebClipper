@@ -1,23 +1,44 @@
-//document.addEventListener("DOMContentLoaded", function(event) {
-//    // Start listener to receive messages
-//    safari.self.addEventListener("message", handleMessage);
-//
-//    // safari.extension.dispatchMessage("Hello World!");
-//});
 (function() {
-// REMOVE ABOVE
  
- safari.self.addEventListener("message", handleMessage);
+// Globals to track page selection. See selectionchange event listener for more
+ var selectedText = ""
+ var selectedSection = window.getSelection()
+ var numberConsecutiveEmptySelections = 0
+    
+ document.addEventListener("selectionchange", () => {
+   // Blatantly stolen from
+   // https://github.com/kristofa/bookmarker_for_pinboard
+   // to address issue of selection being lost when popover appears
+   newSelection = window.getSelection().toString()
+   if (newSelection == "") {
+       numberConsecutiveEmptySelections++
+       if (numberConsecutiveEmptySelections >= 2) {
+           selectedText = ""
+       }
+   } else {
+       selectedText = newSelection
+       selectedSection = window.getSelection()
+       numberConsecutiveEmptySelections = 0
+   }
+});
+ 
+ document.addEventListener("DOMContentLoaded", function(event) {
+     // This prevents running the listener in the iFrames of a page
+    if (window.top === window) {
+        safari.self.addEventListener("message", handleMessage);
+    }
+});
+ 
 
  async function handleMessage(event) {
-    // Need to do this check to avoid iframes
-    if (window.top === window) {
-        if (event.name == "command") {
-            // Execute the command
-            const commandObj = event.message
-            const response = await prepareCommandResponse(commandObj);
-            safari.extension.dispatchMessage("commandResponse", response);
-        }
+    if (event.name == "command") {
+        // Execute the Send to Joplin command
+        const commandObj = event.message
+        const response = await prepareCommandResponse(commandObj);
+        safari.extension.dispatchMessage("commandResponse", response);
+    } else if (event.name = "getSelectedText") {
+        //console.log("About to send back selectedText: " + selectedText)
+        safari.extension.dispatchMessage("selectedText", {"text": selectedText} );
     }
  }
 
@@ -312,7 +333,8 @@
  }
 
  async function prepareCommandResponse(command) {
-     console.log('Got command: ${command.name}');
+     //console.log('Got command: ${command.name}');
+     //console.log('shouldSendToJoplin: ${command.shouldSendToJoplin}');
      const shouldSendToJoplin = !!command.shouldSendToJoplin
      
      const convertToMarkup = command.preProcessFor ? command.preProcessFor : 'markdown';
@@ -369,6 +391,32 @@
 
          const stylesheets = convertToMarkup === 'html' ? getStyleSheets(document) : null;
          return clippedContentResponse(pageTitle(), cleanDocument.innerHTML, imageSizes, getAnchorNames(document), stylesheets);
+     } else if (command.name === 'selectedHtml') {
+
+         hardcodePreStyles(document);
+         addSvgClass(document);
+         preProcessDocument(document);
+
+         const container = document.createElement('div');
+         // CHANGE FROM JOPLIN CODE (CPW - 2020-04-26):
+         // Instead of grabbing directly from the window, we will use the selection
+         // stored in our global variable.
+         // Original code: const rangeCount = window.getSelection().rangeCount;
+         const rangeCount = selectedSection.rangeCount;
+         
+         // Even when the user makes only one selection, Firefox might report multiple selections
+         // so we need to process them all.
+         // Fixes https://github.com/laurent22/joplin/issues/2294
+         for (let i = 0; i < rangeCount; i++) {
+             const range = window.getSelection().getRangeAt(i);
+             container.appendChild(range.cloneContents());
+         }
+
+         const imageSizes = getImageSizes(document, true);
+         const imageIndexes = {};
+         cleanUpElement(convertToMarkup, container, imageSizes, imageIndexes);
+         return clippedContentResponse(pageTitle(), container.innerHTML, getImageSizes(document), getAnchorNames(document));
+
      } else if (command.name === 'pageUrl') {
 
          let url = pageLocationOrigin() + location.pathname + location.search;
@@ -378,9 +426,6 @@
          throw new Error(`Unknown command: ${JSON.stringify(command)}`);
      }
  }
-
-
- // REMOVE BELOW
 }());
 
 

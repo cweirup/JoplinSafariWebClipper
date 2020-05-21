@@ -36,11 +36,16 @@ class Network {
 
     private static func request(url: String, params: [String: Any]) -> URLRequest {
         var request = URLRequest(url: URL(string: url)!)
-        do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)
-        } catch let error {
-            print(error.localizedDescription)
-        }
+        // For now, going to comment this out. Looks like with iOS 13 and macOS 15,
+        // using httpBody is not allowed for GET requests. You would need to append
+        // any parameters as a query string to the URL. For now I don't need to
+        // do any special parameters.
+        // MORE INFO: https://stackoverflow.com/questions/56955595/1103-error-domain-nsurlerrordomain-code-1103-resource-exceeds-maximum-size-i
+//        do {
+//            request.httpBody = try JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)
+//        } catch let error {
+//            print(error.localizedDescription)
+//        }
         request.timeoutInterval = 60
         return request
     }

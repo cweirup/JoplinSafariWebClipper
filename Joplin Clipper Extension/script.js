@@ -10,16 +10,19 @@
    // https://github.com/kristofa/bookmarker_for_pinboard
    // to address issue of selection being lost when popover appears
    newSelection = window.getSelection().toString()
-   if (newSelection == "") {
+   newSelectedSection = window.getSelection()
+    console.log("Stored selection entering selectionchange" + selectedSection.rangeCount)
+   if (newSelection == "" || newSelectedSection.rangeCount == 0) {
        numberConsecutiveEmptySelections++
        if (numberConsecutiveEmptySelections >= 2) {
            selectedText = ""
        }
    } else {
        selectedText = newSelection
-       selectedSection = window.getSelection()
+       selectedSection = newSelectedSection
        numberConsecutiveEmptySelections = 0
    }
+   console.log("Post SelectionChanged selectedSection: " + selectedText + " - Range: " + selectedSection.rangeCount)
 });
  
  document.addEventListener("DOMContentLoaded", function(event) {
@@ -37,7 +40,7 @@
         const response = await prepareCommandResponse(commandObj);
         safari.extension.dispatchMessage("commandResponse", response);
     } else if (event.name = "getSelectedText") {
-        //console.log("About to send back selectedText: " + selectedText)
+        console.log("About to send back selectedText: " + selectedText + " - range = " + selectedSection.rangeCount)
         safari.extension.dispatchMessage("selectedText", {"text": selectedText} );
     }
  }
@@ -403,7 +406,7 @@
          // stored in our global variable.
          // Original code: const rangeCount = window.getSelection().rangeCount;
          const rangeCount = selectedSection.rangeCount;
-         
+         console.log("selectedText = " + selectedText)
          // Even when the user makes only one selection, Firefox might report multiple selections
          // so we need to process them all.
          // Fixes https://github.com/laurent22/joplin/issues/2294
@@ -416,7 +419,6 @@
          const imageIndexes = {};
          cleanUpElement(convertToMarkup, container, imageSizes, imageIndexes);
          return clippedContentResponse(pageTitle(), container.innerHTML, getImageSizes(document), getAnchorNames(document));
-
      } else if (command.name === 'pageUrl') {
 
          let url = pageLocationOrigin() + location.pathname + location.search;

@@ -57,6 +57,12 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
         return shared
     }()
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Clear the folderlist in case we aren't connecting to the server
+        folderList.removeAllItems()
+    }
+    
     override func viewWillAppear() {
         super.viewWillAppear()
         clearSendStatus()
@@ -83,6 +89,7 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
         clipUrlButton.isEnabled = status
         clipCompletePageButton.isEnabled = status
         clipSimplifiedPageButton.isEnabled = status
+        clipSelectionButton.isEnabled = status
     }
     
     @IBAction func clipUrl(_ sender: Any) {
@@ -168,9 +175,16 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
         let joplinEndpoint: String = "http://localhost:41184/ping"
         
         Network.get(url: joplinEndpoint) { (data, error) in
+            if error != nil {
+                NSLog("FUCK: " + (error?.localizedDescription ?? "No error"))
+                // Assume there is a problem, set isServerRunning to false
+                self.isServerRunning = false
+                return
+            }
+            
               if let _data = data {
                   guard let receivedStatus = String(data: _data, encoding: .utf8) else {
-                      NSLog("Count not parse server status from response.")
+                      NSLog("FUCK: Count not parse server status from response.")
                       return
                   }
                   self.isServerRunning = (receivedStatus == "JoplinClipperServer")

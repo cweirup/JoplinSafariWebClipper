@@ -41,6 +41,7 @@ class Network {
         // any parameters as a query string to the URL. For now I don't need to
         // do any special parameters.
         // MORE INFO: https://stackoverflow.com/questions/56955595/1103-error-domain-nsurlerrordomain-code-1103-resource-exceeds-maximum-size-i
+        // POTENTIAL FIX: https://stackoverflow.com/questions/27723912/swift-get-request-with-parameters
 //        do {
 //            request.httpBody = try JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)
 //        } catch let error {

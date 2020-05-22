@@ -1,17 +1,51 @@
 (function() {
  
 // Globals to track page selection. See selectionchange event listener for more
- var selectedText = ""
- var selectedSection = window.getSelection()
- var numberConsecutiveEmptySelections = 0
+    var selectedText = "";
+    var selectedSection = window.getSelection();
+    var selectionSaveNode;
+    var selectionEndNode;
+    var selectionStartOffset;
+    var selectionEndOffset;
+    var selectionNodeData;
+    var selectionNodeHTML;
+    var selectionNodeTagName;
+    
+    var numberConsecutiveEmptySelections = 0;
     
  document.addEventListener("selectionchange", () => {
    // Blatantly stolen from
    // https://github.com/kristofa/bookmarker_for_pinboard
    // to address issue of selection being lost when popover appears
-   newSelection = window.getSelection().toString()
-   newSelectedSection = window.getSelection()
-    console.log("Stored selection entering selectionchange" + selectedSection.rangeCount)
+     newSelection = window.getSelection().toString();
+     newSelectedSection = window.getSelection();
+     
+     if (window.getSelection().rangeCount > 0) {
+         var newRange = window.getSelection().getRangeAt(0);
+         
+         selectionSaveNode = newRange.startContainer;
+         selectionEndNode = newRange.endContainer;
+         
+         selectionStartOffset = newRange.startOffset;
+         selectionEndOffset = newRange.endOffset;
+         
+         selectionNodeData = selectionSaveNode.data;
+         selectionNodeHTML = selectionSaveNode.parentElement.innerHTML;
+         selectionNodeTagName = selectionSaveNode.parentElement.tagName;
+     }
+     
+     //const rangeCount = selectedSection.rangeCount;
+//            console.log("selectedText = " + selectedText);
+//            console.log("selectionNodeData = " + selectionNodeData);
+            // Even when the user makes only one selection, Firefox might report multiple selections
+            // so we need to process them all.
+            // Fixes https://github.com/laurent22/joplin/issues/2294
+     //       for (let i = 0; i < rangeCount; i++) {
+     //           const range = window.getSelection().getRangeAt(i);
+     
+     
+     
+    // console.log("Stored selection entering selectionchange" + selectionNodeHTML)
    if (newSelection == "" || newSelectedSection.rangeCount == 0) {
        numberConsecutiveEmptySelections++
        if (numberConsecutiveEmptySelections >= 2) {
@@ -22,7 +56,7 @@
        selectedSection = newSelectedSection
        numberConsecutiveEmptySelections = 0
    }
-   console.log("Post SelectionChanged selectedSection: " + selectedText + " - Range: " + selectedSection.rangeCount)
+   //console.log("Post SelectionChanged selectedSection: " + selectedText + " - Range: " + selectedSection.rangeCount)
 });
  
  document.addEventListener("DOMContentLoaded", function(event) {
@@ -335,6 +369,35 @@
      };
  }
 
+    // STOLEN FROM: https://stackoverflow.com/questions/23479533/how-can-i-save-a-range-object-from-getselection-so-that-i-can-reproduce-it-on
+function buildRange(document, startOffset, endOffset, nodeData, nodeHTML, nodeTagName){
+    //var cDoc = document.getElementById('content-frame').contentDocument;
+    var cDoc = document;
+    var tagList = cDoc.getElementsByTagName(nodeTagName);
+
+    // find the parent element with the same innerHTML
+    for (var i = 0; i < tagList.length; i++) {
+        if (tagList[i].innerHTML == nodeHTML) {
+            var foundEle = tagList[i];
+        }
+    }
+
+    // find the node within the element by comparing node data
+    var nodeList = foundEle.childNodes;
+    for (var i = 0; i < nodeList.length; i++) {
+        if (nodeList[i].data == nodeData) {
+            var foundNode = nodeList[i];
+        }
+    }
+
+    // create the range
+    var range = cDoc.createRange();
+
+    range.setStart(selectionSaveNode, startOffset);
+    range.setEnd(selectionEndNode, endOffset);
+    return range;
+}
+    
  async function prepareCommandResponse(command) {
      //console.log('Got command: ${command.name}');
      //console.log('shouldSendToJoplin: ${command.shouldSendToJoplin}');
@@ -405,15 +468,21 @@
          // Instead of grabbing directly from the window, we will use the selection
          // stored in our global variable.
          // Original code: const rangeCount = window.getSelection().rangeCount;
-         const rangeCount = selectedSection.rangeCount;
-         console.log("selectedText = " + selectedText)
+         //const rangeCount = selectedSection.rangeCount;
+         
          // Even when the user makes only one selection, Firefox might report multiple selections
          // so we need to process them all.
          // Fixes https://github.com/laurent22/joplin/issues/2294
-         for (let i = 0; i < rangeCount; i++) {
-             const range = window.getSelection().getRangeAt(i);
-             container.appendChild(range.cloneContents());
-         }
+  //       for (let i = 0; i < rangeCount; i++) {
+  //           const range = window.getSelection().getRangeAt(i);
+         const range = buildRange(document,
+                                  selectionStartOffset,
+                                  selectionEndOffset,
+                                  selectionNodeData,
+                                  selectionNodeHTML,
+                                  selectionNodeTagName);
+         container.appendChild(range.cloneContents());
+  //       }
 
          const imageSizes = getImageSizes(document, true);
          const imageIndexes = {};

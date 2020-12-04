@@ -11,12 +11,20 @@ import Foundation
 protocol APIResource {
     associatedtype ModelType: Decodable
     var methodPath: String { get }
+    var queryItems: [URLQueryItem] { get }
+}
+
+extension APIResource{
+    var queryItems: [URLQueryItem] {
+         return [URLQueryItem(name: "as_tree", value: "1")]
+    }
 }
 
 extension APIResource {
     var url: URL {
         var components = URLComponents(string: "http://localhost:41184")!
         components.path = methodPath
+        components.queryItems = queryItems
         return components.url!
     }
 }

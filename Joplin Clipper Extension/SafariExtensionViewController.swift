@@ -235,13 +235,19 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
 
         Network.get(url: tagsResource.url.absoluteString) { (data, error) in
             if let _data = data {
-                if let tags = try? JSONDecoder().decode([Tag].self, from: _data) {
-                    for tag in tags {
+                let jsonData = NSString(data: _data, encoding: String.Encoding.utf8.rawValue)
+                NSLog("Data from loadTags = \(String(describing: jsonData))")
+                
+                if let response = try? JSONDecoder().decode(Response.self, from: _data) {
+                    for tag in response.items! {
                         self.builtInTagKeywords.append(tag.title ?? "")
                     }
-                }
+                    
+                    //has_more = response.has_more == "false" ? false : true
+                } else { NSLog("Error parsing Tag feed") }
             }
         }
+
         
     }
     

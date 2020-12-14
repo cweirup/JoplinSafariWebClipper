@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E0398AA257AA0C700392F68 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0398A9257AA0C700392F68 /* Response.swift */; };
 		2E73B9BF243BBE710022B356 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E73B9BE243BBE710022B356 /* Tag.swift */; };
 		2E740871241C86E70011240B /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E740870241C86E70011240B /* Note.swift */; };
 		2E740873241C89960011240B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E740872241C89960011240B /* Images.xcassets */; };
@@ -84,6 +85,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2E0398A9257AA0C700392F68 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		2E73B9BE243BBE710022B356 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		2E740870241C86E70011240B /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		2E740872241C89960011240B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				2E740872241C89960011240B /* Images.xcassets */,
 				2E95E62C2427090C00F1BDF7 /* NetworkManager.swift */,
 				2EE19ECA24400FBA00B26799 /* Network.swift */,
+				2E0398A9257AA0C700392F68 /* Response.swift */,
 			);
 			path = "Joplin Clipper Extension";
 			sourceTree = "<group>";
@@ -451,6 +454,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E0398AA257AA0C700392F68 /* Response.swift in Sources */,
 				2E73B9BF243BBE710022B356 /* Tag.swift in Sources */,
 				2E95E62D2427090C00F1BDF7 /* NetworkManager.swift in Sources */,
 				2E95E62F2427107000F1BDF7 /* Folder.swift in Sources */,
@@ -552,7 +556,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -607,7 +611,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -630,7 +634,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cweirup.Joplin-Clipper-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -652,7 +656,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cweirup.Joplin-Clipper-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -669,7 +673,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2884XZJMX9;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "Joplin Clipper/Info.plist";
@@ -678,7 +682,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cweirup.Joplin-Clipper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -694,7 +698,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2884XZJMX9;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "Joplin Clipper/Info.plist";
@@ -703,7 +707,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cweirup.Joplin-Clipper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

@@ -5,7 +5,11 @@ This is an Safari App Extension for a Joplin Web Clipper.
 
 However, Safari now requires extensions that are at least partially based on native code (Swift or Objective-C) and must be initally run from a Mac app. This means the Web Clipper included with Joplin will not work. There is currently no Safari App Extension that I am aware of. This is my attempt at making one.
 
-Please note that this is very much **ALPHA** quality code at this point. The core functionality works for normal day-to-day usages, but you will find bugs and issues.
+There are two versions of the extension (due to changes to the underlying APIs):
+* If you are using Joplin v1.4.12 or higher, you need to use [Clipper v0.2.0](https://github.com/cweirup/JoplinSafariWebClipper/releases/tag/v0.2.0).
+* If you are using Joplin prior to v1.4.12, you need to use [Clipper v0.1.3](https://github.com/cweirup/JoplinSafariWebClipper/releases/tag/v.0.1.3).
+
+Please note that this is very much **ALPHA** quality code at this point. The core functionality works for normal day-to-day usage (which I do), but you will find bugs and issues.
 
 ## Working
 * Clip URL

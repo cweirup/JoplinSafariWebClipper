@@ -19,7 +19,7 @@ Please note that this is very much **ALPHA** quality code at this point. The cor
 * Server Status Check
 * Tags
 * Clip Selection
-  * If you are using Stop the Madness, you will need to allow "Text selection" for "Clip Selection" to work. 
+  * If you are using [StopTheMadness](http://underpassapp.com/StopTheMadness/), you will need to allow "Text selection" for "Clip Selection" to work. 
 
 ## Not Working/Missing
 * Clip Complete Page (to HTML)

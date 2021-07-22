@@ -14,7 +14,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
         // This method will be called when a content script provided by your extension calls safari.extension.dispatchMessage("message").
         
         if messageName == "selectedText" {
-            NSLog("In selectedText messageReceived")
+            NSLog("BLEH - In selectedText messageReceived")
             if let selectedText = userInfo?["text"] {
                 DispatchQueue.main.async {
                     SafariExtensionViewController.shared.tempSelection = selectedText as! String
@@ -38,6 +38,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     
                 let noteToSend = Resource<Note>(url: URL(string: "http://localhost:41184/notes")!, method: .post(newNote))
                 NSLog(String(data: noteToSend.urlRequest.httpBody!, encoding: .utf8)!)
+                NSLog(noteToSend.urlRequest.url?.absoluteString ?? "Error parsing URL for POST")
                 URLSession.shared.load(noteToSend) { data in
                     if (data?.id) != nil {
                         message = "Note created!"
@@ -57,7 +58,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     
     override func toolbarItemClicked(in window: SFSafariWindow) {
         // This method will be called when your toolbar item is clicked.
-        NSLog("The extension's toolbar item was clicked")
+        NSLog("BLEH - The extension's toolbar item was clicked")
     }
     
     override func validateToolbarItem(in window: SFSafariWindow, validationHandler: @escaping ((Bool, String) -> Void)) {
@@ -70,7 +71,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     }
     
     override func popoverWillShow(in window: SFSafariWindow) {
-        NSLog("In popoverWillShow")
+        NSLog("BLEH - In popoverWillShow")
         window.getActiveTab { activeTab in
             activeTab?.getActivePage { activePage in
                 activePage?.dispatchMessageToScript(withName: "getSelectedText", userInfo: nil)

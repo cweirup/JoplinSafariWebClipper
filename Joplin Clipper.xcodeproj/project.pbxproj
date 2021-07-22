@@ -27,6 +27,7 @@
 		2ECB44BF23ED1C0C001956F7 /* SafariExtensionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ECB44BD23ED1C0C001956F7 /* SafariExtensionViewController.xib */; };
 		2ECB44C223ED1C0C001956F7 /* script.js in Resources */ = {isa = PBXBuildFile; fileRef = 2ECB44C123ED1C0C001956F7 /* script.js */; };
 		2ECB44C423ED1C0C001956F7 /* ToolbarItemIcon.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2ECB44C323ED1C0C001956F7 /* ToolbarItemIcon.pdf */; };
+		2ED9B2EA26A8965A0084A5FD /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED9B2E926A8965A0084A5FD /* Auth.swift */; };
 		2EE19ECB24400FBA00B26799 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE19ECA24400FBA00B26799 /* Network.swift */; };
 		2EEE8B8B2400E30F00F751CC /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2EEE8B8A2400E30F00F751CC /* .gitignore */; };
 		2EEE8B8C2400E30F00F751CC /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2EEE8B8A2400E30F00F751CC /* .gitignore */; };
@@ -113,6 +114,7 @@
 		2ECB44C123ED1C0C001956F7 /* script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = script.js; sourceTree = "<group>"; };
 		2ECB44C323ED1C0C001956F7 /* ToolbarItemIcon.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = ToolbarItemIcon.pdf; sourceTree = "<group>"; };
 		2ECB44C523ED1C0C001956F7 /* Joplin_Clipper_Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Joplin_Clipper_Extension.entitlements; sourceTree = "<group>"; };
+		2ED9B2E926A8965A0084A5FD /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
 		2EE19ECA24400FBA00B26799 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		2EEE8B8A2400E30F00F751CC /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		2EEE8B902415BF2200F751CC /* JSDOMParser.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = JSDOMParser.js; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				2E95E62C2427090C00F1BDF7 /* NetworkManager.swift */,
 				2EE19ECA24400FBA00B26799 /* Network.swift */,
 				2E0398A9257AA0C700392F68 /* Response.swift */,
+				2ED9B2E926A8965A0084A5FD /* Auth.swift */,
 			);
 			path = "Joplin Clipper Extension";
 			sourceTree = "<group>";
@@ -462,6 +465,7 @@
 				2ECB44BA23ED1C0C001956F7 /* SafariExtensionHandler.swift in Sources */,
 				2EE19ECB24400FBA00B26799 /* Network.swift in Sources */,
 				2E740871241C86E70011240B /* Note.swift in Sources */,
+				2ED9B2EA26A8965A0084A5FD /* Auth.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -634,7 +638,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 0.2;
+				MARKETING_VERSION = 0.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cweirup.Joplin-Clipper-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -656,7 +660,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 0.2;
+				MARKETING_VERSION = 0.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cweirup.Joplin-Clipper-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -682,7 +686,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 0.2;
+				MARKETING_VERSION = 0.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cweirup.Joplin-Clipper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -707,7 +711,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 0.2;
+				MARKETING_VERSION = 0.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cweirup.Joplin-Clipper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

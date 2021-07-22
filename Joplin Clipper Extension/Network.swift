@@ -43,7 +43,13 @@ class Network {
     }
 
     private static func request(url: String, params: [String: Any]) -> URLRequest {
-        var request = URLRequest(url: URL(string: url)!)
+        var components = URLComponents(string: url)!
+        
+        components.queryItems = params.map { (key, value) in
+            URLQueryItem(name: key, value: (value as! String))
+        }
+        //components.queryItems?.append(URLQueryItem(name: "token", value: "fd6eb4000ddcc2b5ddf3de0606ecc058faf1702e9df563f0ae53444b654a9acbb9aceee2f0505e0f75c87269af7820e5350d0d582a3fcaa6c05147df5b358fe6")) 
+        
         // For now, going to comment this out. Looks like with iOS 13 and macOS 15,
         // using httpBody is not allowed for GET requests. You would need to append
         // any parameters as a query string to the URL. For now I don't need to
@@ -55,6 +61,7 @@ class Network {
 //        } catch let error {
 //            print(error.localizedDescription)
 //        }
+        var request = URLRequest(url: components.url!)
         request.timeoutInterval = 60
         return request
     }

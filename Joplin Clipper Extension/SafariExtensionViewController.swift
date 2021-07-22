@@ -23,6 +23,21 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
             }
             pageTitleLabel.stringValue = "Server is running!"
             serverStatusIcon.image = NSImage(named: "led_green")
+            checkAuth()
+        }
+    }
+    var isAuthorized = false {
+        didSet {
+            folderList.isEnabled = isAuthorized
+            tagList.isEnabled = isAuthorized
+            setButtonsEnabledStatus(to: isAuthorized)
+            guard isAuthorized else {
+                pageTitleLabel.stringValue = "Please check Joplin to authorize Clipper."
+                serverStatusIcon.image = NSImage(named: "led_orange")
+                return
+            }
+            pageTitleLabel.stringValue = "Server is running!"
+            serverStatusIcon.image = NSImage(named: "led_green")
             loadFolders()
         }
     }
@@ -60,14 +75,20 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
     override func viewDidLoad() {
         super.viewDidLoad()
         // Clear the folderlist in case we aren't connecting to the server
+        NSLog("BLEH - Entered viewDidLoad")
         folderList.removeAllItems()
     }
     
     override func viewWillAppear() {
         super.viewWillAppear()
+        NSLog("BLEH - Entered viewWillAppear")
         clearSendStatus()
         loadPageInfo()
         checkServerStatus()
+        //if(isServerRunning) {
+        //    NSLog("BLEH - Confirmed server running - now check auth")
+        //    checkAuth()
+        //}
     }
     
     override func viewWillDisappear() {
@@ -104,7 +125,7 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
         Network.post(url: URL(string: "http://localhost:41184/notes")!, object: newNote) { (data, error) in
             if let _data = data {
                 guard let confirmedNote = try? JSONDecoder().decode(Note.self, from: _data) else {
-                    NSLog("Count not parse server status from response.")
+                    NSLog("BLEH - BLEH - Count not parse server status from response.")
                     return
                 }
                 if (confirmedNote.id) != nil {
@@ -121,19 +142,19 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
     }
     
     @IBAction func clipCompletePage(_ sender: Any) {
-        NSLog("In clipCompletePage")
+        NSLog("BLEH - In clipCompletePage")
         responseStatus.stringValue = "Processing..."
         sendCommandToActiveTab(command: ["name": "completePageHtml", "preProcessFor": "markdown"])
     }
     
     @IBAction func clipSimplifiedPage(_ sender: Any) {
-        NSLog("In clipSimplifiedPage")
+        NSLog("BLEH - In clipSimplifiedPage")
         responseStatus.stringValue = "Processing..."
         sendCommandToActiveTab(command: ["name": "simplifiedPageHtml"])
     }
     
     @IBAction func clipSelection(_ sender: Any) {
-        NSLog("In clipSelection")
+        NSLog("BLEH - In clipSelection")
         responseStatus.stringValue = "Processing..."
         sendCommandToActiveTab(command: ["name": "selectedHtml"])
         tempSelection = ""
@@ -144,7 +165,7 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
     }
     
     func sendCommandToActiveTab(command: Dictionary<String, String>) {
-        NSLog("In sendCommandToActiveTab")
+        NSLog("BLEH - In sendCommandToActiveTab")
         // Send 'command' to current page
         SFSafariApplication.getActiveWindow{ (activeWindow) in
             activeWindow?.getActiveTab{ (activeTab) in
@@ -172,11 +193,14 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
     }
     
     func checkServerStatus() {
+        NSLog("BLEH - In checkServerStatus()")
+        // We need to also start checking for and capturing the AUTH_TOKEN here.
+        // See https://github.com/laurent22/joplin/blob/dev/readme/spec/clipper_auth.md
         let joplinEndpoint: String = "http://localhost:41184/ping"
         
         Network.get(url: joplinEndpoint) { (data, error) in
             if error != nil {
-                NSLog("FUCK: " + (error?.localizedDescription ?? "No error"))
+                NSLog("BLEH - FUCK: " + (error?.localizedDescription ?? "No error"))
                 // Assume there is a problem, set isServerRunning to false
                 self.isServerRunning = false
                 return
@@ -184,7 +208,7 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
             
               if let _data = data {
                   guard let receivedStatus = String(data: _data, encoding: .utf8) else {
-                      NSLog("FUCK: Count not parse server status from response.")
+                      NSLog("BLEH - FUCK: Count not parse server status from response.")
                       return
                   }
                   self.isServerRunning = (receivedStatus == "JoplinClipperServer")
@@ -192,7 +216,68 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
           }
     }
 
+    func checkAuth() {
+        NSLog("BLEH - In checkAuth()")
+        
+        // Get auth_token from UserDefaults
+        let defaults = UserDefaults.standard
+        let authToken = defaults.string(forKey: "authToken")
+       
+        // Check if we get a valid response
+        // - If so, store API token in UserDefaults
+        // - If not, request auth_token and update
+        let params = ["auth_token": authToken]
+        NSLog("BLEH - Auth Token = \(authToken)")
+        
+        if (authToken != nil) {
+            Network.get(url: "http://localhost:41184/auth/check", params: params) { (data, error) in
+                do {
+                    if let _data = data {
+
+                        let result = try JSONDecoder().decode(AuthResponse.self, from: _data)
+                        NSLog("BLEH - inished JSON decoding")
+                        
+                        switch result {
+                        case .success(let authData):
+                            self.isAuthorized = true
+                            defaults.set(authData.token, forKey: "apiToken")
+                            NSLog("BLEH - Auth Success: \(authData.token)")
+                        case .failure(let errorData):
+                            // handle
+                            self.isAuthorized = false
+                            NSLog("BLEH - \(errorData.error)")
+                        }
+                    }
+                } catch {
+                    NSLog("BLEH - Unable to authenticate")
+                }
+                
+            }
+        } else {
+            Network.post(url: "http://localhost:41184/auth") { (data, error) in
+                do {
+                    if let _data = data {
+                        NSLog("BLEH - Getting auth_token")
+                        let result = try JSONDecoder().decode(AuthToken.self, from: _data)
+                        NSLog("BLEH - Finished AuthTokenJSON decoding - \(result.auth_token)")
+                        
+                        defaults.set(result.auth_token, forKey: "authToken")
+                        
+                        self.pageTitleLabel.stringValue = "Please check Joplin to authorize Clipper."
+                        self.serverStatusIcon.image = NSImage(named: "led_orange")
+                    }
+                } catch {
+                    NSLog("BLEH - Unable to get auth token.")
+                }
+                
+            }
+        }
+        
+        
+    }
+    
     private func loadFoldersIntoPopup(folders: [Folder], indent: Int = 0) {
+        NSLog("BLEH - In loadFoldersIntoPopup")
         for folder in folders {
             // Initially setting the popup item to 'BLANK' then setting the title
             // This allows us to have duplicate notebook/folder titles in the dropdown list
@@ -210,18 +295,28 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
     func loadFolders() {
         // Run code to generate list of notebooks
         folderList.removeAllItems()
-
-        Network.get(url: foldersResource.url.absoluteString) { (data, error) in
+        
+        let defaults = UserDefaults.standard
+        let apiToken = defaults.string(forKey: "apiToken")
+        
+        let params = ["as_tree": "1",
+                      "token": apiToken]
+        
+        Network.get(url: foldersResource.url.absoluteString, params: params) { (data, error) in
             if let _data = data {
                 
                 let jsonData = NSString(data: _data, encoding: String.Encoding.utf8.rawValue)
-                NSLog("Data from loadFolders = \(String(describing: jsonData))")
+                NSLog("BLEH - Data from loadFolders = \(String(describing: jsonData))")
                 
                 if let folders = try? JSONDecoder().decode([Folder].self, from: _data) {
+                    NSLog("BLEH - Parse of Folders starting")
                     self.loadFoldersIntoPopup(folders: folders, indent: 0)
-
+                    NSLog("BLEH - Parse of Folders complete")
+                    
                     let defaults = UserDefaults.standard
                     self.folderList.selectItem(at: defaults.integer(forKey: "selectedFolderIndex"))
+                } else {
+                    NSLog("BLEH - Decode of Folders failed")
                 }
             }
             
@@ -233,10 +328,15 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
         // Run code to generate list of tags
         builtInTagKeywords.removeAll()
 
-        Network.get(url: tagsResource.url.absoluteString) { (data, error) in
+        let defaults = UserDefaults.standard
+        let apiToken = defaults.string(forKey: "apiToken")
+        
+        let params = ["token": apiToken]
+        
+        Network.get(url: tagsResource.url.absoluteString, params: params as [String : Any]) { (data, error) in
             if let _data = data {
                 let jsonData = NSString(data: _data, encoding: String.Encoding.utf8.rawValue)
-                NSLog("Data from loadTags = \(String(describing: jsonData))")
+                NSLog("BLEH - Data from loadTags = \(String(describing: jsonData))")
                 
                 if let response = try? JSONDecoder().decode(Response.self, from: _data) {
                     for tag in response.items! {
@@ -244,7 +344,7 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
                     }
                     
                     //has_more = response.has_more == "false" ? false : true
-                } else { NSLog("Error parsing Tag feed") }
+                } else { NSLog("BLEH - Error parsing Tag feed") }
             }
         }
 

@@ -42,12 +42,12 @@ extension Resource where A: Decodable {
     }
     
     init<Body: Encodable>(url:URL, method: HttpMethod<Body>) {
-        var components = URLComponents(string: url.absoluteString)
-        let queryItem = [URLQueryItem(name: "token", value: "fd6eb4000ddcc2b5ddf3de0606ecc058faf1702e9df563f0ae53444b654a9acbb9aceee2f0505e0f75c87269af7820e5350d0d582a3fcaa6c05147df5b358fe6")]
-        components?.queryItems = queryItem
-        
-        urlRequest = URLRequest(url: (components?.url!)!)
-        //urlRequest = URLRequest(url: url)
+//        var components = URLComponents(string: url.absoluteString)
+//        let queryItem = [URLQueryItem(name: "token", value: "fd6eb4000ddcc2b5ddf3de0606ecc058faf1702e9df563f0ae53444b654a9acbb9aceee2f0505e0f75c87269af7820e5350d0d582a3fcaa6c05147df5b358fe6")]
+//        components?.queryItems = queryItem
+//
+//        urlRequest = URLRequest(url: (components?.url!)!)
+        urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = method.method
         switch method {
         case .get: ()
@@ -61,9 +61,8 @@ extension Resource where A: Decodable {
     
     init<Body: Encodable>(url:URL, params: [String: Any], method: HttpMethod<Body>) {
         var components = URLComponents(string: url.absoluteString)
-        //let queryItem = [URLQueryItem(name: "token", value: "fd6eb4000ddcc2b5ddf3de0606ecc058faf1702e9df563f0ae53444b654a9acbb9aceee2f0505e0f75c87269af7820e5350d0d582a3fcaa6c05147df5b358fe6")]
         
-        NSLog("BLEH - Resource.init params = \(params)")
+        //NSLog("JSC - Resource.init params = \(params)")
         if (!params.isEmpty) {
             components?.queryItems = params.map { (key, value) in
                 URLQueryItem(name: key, value: (value as! String))

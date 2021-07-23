@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import os
 
 protocol APIResource {
     associatedtype ModelType: Decodable
@@ -68,7 +69,7 @@ class Network {
 
     private static func request<T: Encodable>(url: URL, params: [String: Any] = [:], object: T) -> URLRequest {
         var components = URLComponents(string: url.absoluteString)!
-        NSLog("BLEH - Network.request params = \(params)")
+        
         if (!params.isEmpty) {
             components.queryItems = params.map { (key, value) in
                 URLQueryItem(name: key, value: (value as! String))
@@ -77,7 +78,7 @@ class Network {
         
         var request = URLRequest(url: components.url!)
         
-        NSLog("BLEH - Network.request = \(components.url?.absoluteString)")
+        //os_log("BLEH - Network.request = \(components.url?.absoluteString)")
         
         do {
             request.httpBody = try JSONEncoder().encode(object)
@@ -101,7 +102,6 @@ class Network {
         task.resume()
     }
    
-    // NEED VERSION OF THIS THAT SUPPORTS PARAMETERS
    static func post<T: Encodable>( url: URL, object: T, callback: @escaping (_ data: Data?, _ error: Error?) -> Void) {
        var request: URLRequest = self.request(url: url, object: object)
        request.httpMethod = "POST"

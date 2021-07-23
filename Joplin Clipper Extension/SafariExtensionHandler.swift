@@ -7,6 +7,7 @@
 //
 
 import SafariServices
+import os
 
 class SafariExtensionHandler: SFSafariExtensionHandler {
     
@@ -14,7 +15,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
         // This method will be called when a content script provided by your extension calls safari.extension.dispatchMessage("message").
         
         if messageName == "selectedText" {
-            NSLog("BLEH - In selectedText messageReceived")
+            os_log("JSC - In selectedText messageReceived")
             if let selectedText = userInfo?["text"] {
                 DispatchQueue.main.async {
                     SafariExtensionViewController.shared.tempSelection = selectedText as! String
@@ -33,7 +34,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
                 let newNote = Note(id: "", base_url: userInfo?["base_url"] as? String, parent_id: parentId, title: title, url: url, body: "", body_html: userInfo?["html"] as? String, tags: tags)
                 
                 //let newNote = Note(title: userInfo?["title"] as! String, url: userInfo?["url"] as! String)
-                NSLog(newNote.title!)
+                //NSLog(newNote.title!)
                 var message = ""
     
                 let notesUrl = URL(string: "http://localhost:41184/notes")
@@ -47,12 +48,12 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
                 //components?.queryItems = [tokenQuery]
                 
                 //let notesUrl = components?.url
-                NSLog("BLEH - messageReceived URL - \(notesUrl!.absoluteString)")
+                //NSLog("BLEH - messageReceived URL - \(notesUrl!.absoluteString)")
                 
                 //let noteToSend = Resource<Note>(url: URL(string: "http://localhost:41184/notes")!, method: .post(newNote))
                 let noteToSend = Resource<Note>(url: notesUrl!, params: tokenQuery, method: .post(newNote))
-                NSLog(String(data: noteToSend.urlRequest.httpBody!, encoding: .utf8)!)
-                NSLog(noteToSend.urlRequest.url?.absoluteString ?? "Error parsing URL for POST")
+//                NSLog(String(data: noteToSend.urlRequest.httpBody!, encoding: .utf8)!)
+//                NSLog(noteToSend.urlRequest.url?.absoluteString ?? "Error parsing URL for POST")
                 URLSession.shared.load(noteToSend) { data in
                     if (data?.id) != nil {
                         message = "Note created!"

@@ -52,8 +52,8 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
                 
                 //let noteToSend = Resource<Note>(url: URL(string: "http://localhost:41184/notes")!, method: .post(newNote))
                 let noteToSend = Resource<Note>(url: notesUrl!, params: tokenQuery, method: .post(newNote))
-//                NSLog(String(data: noteToSend.urlRequest.httpBody!, encoding: .utf8)!)
-//                NSLog(noteToSend.urlRequest.url?.absoluteString ?? "Error parsing URL for POST")
+//                os_log(String(data: noteToSend.urlRequest.httpBody!, encoding: .utf8)!)
+//                os_log(noteToSend.urlRequest.url?.absoluteString ?? "Error parsing URL for POST")
                 URLSession.shared.load(noteToSend) { data in
                     if (data?.id) != nil {
                         message = "Note created!"

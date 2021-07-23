@@ -36,7 +36,21 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
                 NSLog(newNote.title!)
                 var message = ""
     
-                let noteToSend = Resource<Note>(url: URL(string: "http://localhost:41184/notes")!, method: .post(newNote))
+                let notesUrl = URL(string: "http://localhost:41184/notes")
+                
+                let defaults = UserDefaults.standard
+                let apiToken = defaults.string(forKey: "apiToken")
+                
+                //let tokenQuery = URLQueryItem(name: "token", value: apiToken)
+                let tokenQuery = ["token": apiToken]
+                
+                //components?.queryItems = [tokenQuery]
+                
+                //let notesUrl = components?.url
+                NSLog("BLEH - messageReceived URL - \(notesUrl!.absoluteString)")
+                
+                //let noteToSend = Resource<Note>(url: URL(string: "http://localhost:41184/notes")!, method: .post(newNote))
+                let noteToSend = Resource<Note>(url: notesUrl!, params: tokenQuery, method: .post(newNote))
                 NSLog(String(data: noteToSend.urlRequest.httpBody!, encoding: .utf8)!)
                 NSLog(noteToSend.urlRequest.url?.absoluteString ?? "Error parsing URL for POST")
                 URLSession.shared.load(noteToSend) { data in

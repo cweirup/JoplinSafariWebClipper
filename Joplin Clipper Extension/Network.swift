@@ -66,8 +66,19 @@ class Network {
         return request
     }
 
-    private static func request<T: Encodable>(url: URL, object: T) -> URLRequest {
-        var request = URLRequest(url: url)
+    private static func request<T: Encodable>(url: URL, params: [String: Any] = [:], object: T) -> URLRequest {
+        var components = URLComponents(string: url.absoluteString)!
+        NSLog("BLEH - Network.request params = \(params)")
+        if (!params.isEmpty) {
+            components.queryItems = params.map { (key, value) in
+                URLQueryItem(name: key, value: (value as! String))
+            }
+        }
+        
+        var request = URLRequest(url: components.url!)
+        
+        NSLog("BLEH - Network.request = \(components.url?.absoluteString)")
+        
         do {
             request.httpBody = try JSONEncoder().encode(object)
         } catch let error {
@@ -89,7 +100,8 @@ class Network {
         })
         task.resume()
     }
-    
+   
+    // NEED VERSION OF THIS THAT SUPPORTS PARAMETERS
    static func post<T: Encodable>( url: URL, object: T, callback: @escaping (_ data: Data?, _ error: Error?) -> Void) {
        var request: URLRequest = self.request(url: url, object: object)
        request.httpMethod = "POST"
@@ -100,6 +112,17 @@ class Network {
        })
        task.resume()
    }
+    
+    static func post<T: Encodable>( url: URL, params: [String: Any] = [:], object: T, callback: @escaping (_ data: Data?, _ error: Error?) -> Void) {
+        var request: URLRequest = self.request(url: url, params: params, object: object)
+        request.httpMethod = "POST"
+        let task = session().dataTask(with: request, completionHandler: { (data, response, error) in
+            DispatchQueue.main.async {
+                callback(data, error)
+            }
+        })
+        task.resume()
+    }
     
     static func get( url: String, params: [String: Any] = [:], callback: @escaping (_ data: Data?, _ error: Error?) -> Void) {
         var request: URLRequest = self.request(url: url, params: params)

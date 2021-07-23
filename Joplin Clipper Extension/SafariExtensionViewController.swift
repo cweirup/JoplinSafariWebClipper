@@ -7,8 +7,10 @@
 //
 
 import SafariServices
+import OSLog
 
 class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFieldDelegate {
+    //let logger = Logger()
     
     var allFolders = [Folder]()
     var isServerRunning = false {
@@ -41,6 +43,7 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
             loadFolders()
         }
     }
+    // NEED SOMETHING TO TRACK AUTH STATUS
     
     var selectedFolderIndex = 0
     
@@ -75,7 +78,9 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
     override func viewDidLoad() {
         super.viewDidLoad()
         // Clear the folderlist in case we aren't connecting to the server
-        NSLog("BLEH - Entered viewDidLoad")
+        //NSLog("BLEH - Entered viewDidLoad")
+        //logger.info("BLEH - Entered viewDidLoad from logger")
+        os_log("BLEH - Entered viewDidLoad from os_log")
         folderList.removeAllItems()
     }
     
@@ -116,13 +121,19 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
     @IBAction func clipUrl(_ sender: Any) {
         responseStatus.stringValue = "Processing..."
         
-        var newNote = Note(title: pageTitle.stringValue, url: pageUrl.stringValue, parent: allFolders[folderList.indexOfSelectedItem].id ?? "")
+        var newNote = Note(title: pageTitle.stringValue,
+                           url: pageUrl.stringValue,
+                           parent: allFolders[folderList.indexOfSelectedItem].id ?? "")
         newNote.body_html = pageUrl.stringValue
         newNote.tags = tagList.stringValue
         
         var message = ""
         
-        Network.post(url: URL(string: "http://localhost:41184/notes")!, object: newNote) { (data, error) in
+        let apiToken = getAPIToken()
+        let params = ["token": apiToken]
+        NSLog("BLEH - Token in clipURL: \(apiToken) - \(params)")
+        
+        Network.post(url: URL(string: "http://localhost:41184/notes")!, params: params, object: newNote) { (data, error) in
             if let _data = data {
                 guard let confirmedNote = try? JSONDecoder().decode(Note.self, from: _data) else {
                     NSLog("BLEH - BLEH - Count not parse server status from response.")
@@ -218,7 +229,7 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
 
     func checkAuth() {
         NSLog("BLEH - In checkAuth()")
-        
+        loggingPrint("BLEH - In checkAuth() from loggingPrint")
         // Get auth_token from UserDefaults
         let defaults = UserDefaults.standard
         let authToken = defaults.string(forKey: "authToken")
@@ -235,13 +246,26 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
                     if let _data = data {
 
                         let result = try JSONDecoder().decode(AuthResponse.self, from: _data)
-                        NSLog("BLEH - inished JSON decoding")
+                        NSLog("BLEH - Finished JSON decoding - \(result)")
                         
                         switch result {
-                        case .success(let authData):
+                        case .accepted(let successAuth):
+                            // NEED TO CHECK IF WE GET A status: "rejected". Currently this returns both accepted and rejected.
+                            defaults.set(successAuth.token, forKey: "apiToken")
+                            NSLog("BLEH - Auth Accepted: \(successAuth.token)")
                             self.isAuthorized = true
-                            defaults.set(authData.token, forKey: "apiToken")
-                            NSLog("BLEH - Auth Success: \(authData.token)")
+                        case .waiting(let waitingAuth):
+                            self.isAuthorized = false
+                            NSLog("BLEH - Waiting on response")
+                            self.pageTitleLabel.stringValue = "Please check Joplin to authorize Clipper."
+                            self.serverStatusIcon.image = NSImage(named: "led_orange")
+                        case .rejected(let rejectedAuth):
+                            self.isAuthorized = false
+                            // What do we do if it's rejected? I guess clear out the API
+                            NSLog("BLEH - Auth Rejected: \(rejectedAuth.status)")
+                            self.requestAuth()
+                            self.pageTitleLabel.stringValue = "Authorization Failed. Check Joplin for new request."
+                            self.serverStatusIcon.image = NSImage(named: "led_red")
                         case .failure(let errorData):
                             // handle
                             self.isAuthorized = false
@@ -254,26 +278,49 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
                 
             }
         } else {
-            Network.post(url: "http://localhost:41184/auth") { (data, error) in
-                do {
-                    if let _data = data {
-                        NSLog("BLEH - Getting auth_token")
-                        let result = try JSONDecoder().decode(AuthToken.self, from: _data)
-                        NSLog("BLEH - Finished AuthTokenJSON decoding - \(result.auth_token)")
-                        
-                        defaults.set(result.auth_token, forKey: "authToken")
-                        
-                        self.pageTitleLabel.stringValue = "Please check Joplin to authorize Clipper."
-                        self.serverStatusIcon.image = NSImage(named: "led_orange")
-                    }
-                } catch {
-                    NSLog("BLEH - Unable to get auth token.")
-                }
-                
-            }
+            requestAuth()
+//            Network.post(url: "http://localhost:41184/auth") { (data, error) in
+//                do {
+//                    if let _data = data {
+//                        NSLog("BLEH - Getting auth_token")
+//                        let result = try JSONDecoder().decode(AuthToken.self, from: _data)
+//                        NSLog("BLEH - Finished AuthTokenJSON decoding - \(result.auth_token)")
+//
+//                        defaults.set(result.auth_token, forKey: "authToken")
+//
+//                        self.pageTitleLabel.stringValue = "Please check Joplin to authorize Clipper."
+//                        self.serverStatusIcon.image = NSImage(named: "led_orange")
+//                    }
+//                } catch {
+//                    NSLog("BLEH - Unable to get auth token.")
+//                }
+//
+//            }
         }
         
         
+    }
+    
+    private func requestAuth() {
+        let defaults = UserDefaults.standard
+        
+        Network.post(url: "http://localhost:41184/auth") { (data, error) in
+            do {
+                if let _data = data {
+                    NSLog("BLEH - Getting auth_token")
+                    let result = try JSONDecoder().decode(AuthToken.self, from: _data)
+                    NSLog("BLEH - Finished AuthTokenJSON decoding - \(result.auth_token)")
+                    
+                    defaults.set(result.auth_token, forKey: "authToken")
+                    
+                    self.pageTitleLabel.stringValue = "Please check Joplin to authorize Clipper."
+                    self.serverStatusIcon.image = NSImage(named: "led_orange")
+                }
+            } catch {
+                NSLog("BLEH - Unable to get auth token.")
+            }
+            
+        }
     }
     
     private func loadFoldersIntoPopup(folders: [Folder], indent: Int = 0) {
@@ -295,9 +342,8 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
     func loadFolders() {
         // Run code to generate list of notebooks
         folderList.removeAllItems()
-        
-        let defaults = UserDefaults.standard
-        let apiToken = defaults.string(forKey: "apiToken")
+
+        let apiToken = getAPIToken()
         
         let params = ["as_tree": "1",
                       "token": apiToken]
@@ -349,6 +395,12 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
         }
 
         
+    }
+    
+    private func getAPIToken() -> String {
+        let defaults = UserDefaults.standard
+        let apiToken = defaults.string(forKey: "apiToken")
+        return apiToken!
     }
     
     // MARK: - NSTokenFieldDelegate methods

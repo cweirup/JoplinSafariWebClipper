@@ -24,7 +24,8 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
             }
             pageTitleLabel.stringValue = "Server is running!"
             serverStatusIcon.image = NSImage(named: "led_green")
-            checkAuth()
+            //checkAuth()
+            loadFolders()
         }
     }
     var isAuthorized = false {
@@ -214,7 +215,11 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
     func checkAuth() {
         os_log("JSC - In checkAuth()")
         
-        // Get auth_token from UserDefaults
+        // First, check if we have an AuthToken and an APIToken
+        //  Then test using APIToken
+        //  If good, we keep going
+        //  Otherwise, need to reauth the clipper
+        
         let defaults = UserDefaults.standard
         let authToken = defaults.string(forKey: "authToken")
        
@@ -222,6 +227,11 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
         // - If so, store API token in UserDefaults
         // - If not, request auth_token and update
         let params = ["auth_token": authToken]
+        //os_log("JSC - AUTH - Retrieved AuthToken")
+        //os_log(authToken)
+        //os_log("JSC - Retrieved AuthToken: %s.", type: .info, authToken as! CVarArg)
+        //os_log("JSC - Retrieved AuthToken: %@.", authToken)
+        //print(authToken)
         
         if (authToken != nil) {
             Network.get(url: "http://localhost:41184/auth/check", params: params) { (data, error) in
@@ -314,16 +324,48 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
         Network.get(url: foldersResource.url.absoluteString, params: params) { (data, error) in
             if let _data = data {
                 
-                let jsonData = NSString(data: _data, encoding: String.Encoding.utf8.rawValue)
+                //let jsonData = NSString(data: _data, encoding: String.Encoding.utf8.rawValue)
+                let jsonData = String(data: _data, encoding: String.Encoding(rawValue: String.Encoding.utf8.rawValue) )
+//                guard let json = _data as? [String:AnyObject] else {
+//                    return
+//                }
                 
-                if let folders = try? JSONDecoder().decode([Folder].self, from: _data) {
-                    self.loadFoldersIntoPopup(folders: folders, indent: 0)
-                    
-                    let defaults = UserDefaults.standard
-                    self.folderList.selectItem(at: defaults.integer(forKey: "selectedFolderIndex"))
-                } else {
-                    os_log("JSC - Decode of Folders failed")
+                // Check if we got Folders or Error in the response
+                do {
+                    //if let folders =  jsonData!.contains("id"){
+                    if jsonData!.contains("id") {
+                        os_log("JSC - Received valid Folders in loadFolders")
+                        // We received folders information
+                        if let folders = try? JSONDecoder().decode([Folder].self, from: _data) {
+                            self.loadFoldersIntoPopup(folders: folders, indent: 0)
+                            
+                            let defaults = UserDefaults.standard
+                            self.folderList.selectItem(at: defaults.integer(forKey: "selectedFolderIndex"))
+                        } else {
+                            os_log("JSC - Decode of Folders failed")
+                        }
+                    } else {
+                        // Mostly likely Error, will need to reauthorize
+                        //let res = try JSONDecoder().decode(Valid.self, from: data)
+                        os_log("JSC - Did not get valid folders in loadFolders")
+                        self.checkAuth()
+                        return
+                    }
+                } catch let error {
+                    print(error)
                 }
+                
+                
+//                if let folders = try? JSONDecoder().decode([Folder].self, from: _data) {
+//                    self.loadFoldersIntoPopup(folders: folders, indent: 0)
+//
+//                    let defaults = UserDefaults.standard
+//                    self.folderList.selectItem(at: defaults.integer(forKey: "selectedFolderIndex"))
+//                } else {
+//
+//                    os_log("JSC - Decode of Folders failed")
+//
+//                }
             }
             
             self.loadTags()

@@ -14,6 +14,15 @@ There are now three versions of the extension based on what official release ver
 
 Please note that this is very much **ALPHA** quality code at this point. The core functionality works for normal day-to-day usage (which I do), but you will find bugs and issues.
 
+## Installation
+* Download the executable either from one of the links above or from the Releases page
+* Unzip the file and move the executable to the Applications folder
+* Run the executable once. You’ll be prompted to enable it in Safari Extensions
+* After that, you should see a button with the Joplin logo in the toolbar
+* Click the extension button
+  * If Joplin is running, you'll be asked to grant permission. Go over to Joplin to do that.
+  * If Joplin is not running, you'll see a message that it is unavailable. Start Joplin, then grand permission
+
 ## Working
 * Clip URL
 * Clip Complete Page (to Markdown)

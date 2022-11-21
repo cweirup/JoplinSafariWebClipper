@@ -20,8 +20,9 @@ Please note that this is very much **ALPHA** quality code at this point. The cor
 * Run the executable once. You’ll be prompted to enable it in Safari Extensions
 * After that, you should see a button with the Joplin logo in the toolbar
 * Click the extension button
+* If you are using Clipper v0.2.1, you will need to do the following:
   * If Joplin is running, you'll be asked to grant permission. Go over to Joplin to do that.
-  * If Joplin is not running, you'll see a message that it is unavailable. Start Joplin, then grand permission
+  * If Joplin is not running, you'll see a message that it is unavailable. Start Joplin, then grant permission
 
 ## Working
 * Clip URL

@@ -631,6 +631,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Joplin Clipper Extension/Joplin_Clipper_Extension.entitlements";
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 2884XZJMX9;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "Joplin Clipper Extension/Info.plist";
@@ -653,6 +654,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Joplin Clipper Extension/Joplin_Clipper_Extension.entitlements";
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 2884XZJMX9;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "Joplin Clipper Extension/Info.plist";
@@ -678,7 +680,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 2884XZJMX9;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "Joplin Clipper/Info.plist";
@@ -703,7 +705,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 2884XZJMX9;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "Joplin Clipper/Info.plist";

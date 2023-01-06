@@ -24,8 +24,10 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
             }
             pageTitleLabel.stringValue = "Server is running!"
             serverStatusIcon.image = NSImage(named: "led_green")
-            //checkAuth()
-            loadFolders()
+            checkAuth()
+            // I think this is causing the dialog to disappear when granting authorization
+            // As well as loading folders twice
+            //loadFolders()
         }
     }
     var isAuthorized = false {
@@ -207,6 +209,7 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
                       os_log("JSC - Count not parse server status from response.")
                       return
                   }
+                  
                   self.isServerRunning = (receivedStatus == "JoplinClipperServer")
               }
           }
@@ -220,6 +223,8 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
         //  If good, we keep going
         //  Otherwise, need to reauth the clipper
         
+        // OR Check other API calls - if we get an token error on the response, start the Auth process
+        
         let defaults = UserDefaults.standard
         let authToken = defaults.string(forKey: "authToken")
        
@@ -229,22 +234,26 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
         let params = ["auth_token": authToken]
         //os_log("JSC - AUTH - Retrieved AuthToken")
         //os_log(authToken)
-        //os_log("JSC - Retrieved AuthToken: %s.", type: .info, authToken as! CVarArg)
+        os_log("JSC - Retrieved AuthToken: %@.", log: .default, type: .info, authToken!)
         //os_log("JSC - Retrieved AuthToken: %@.", authToken)
-        //print(authToken)
+        print(authToken)
         
         if (authToken != nil) {
+            os_log("JSC - AUTH - authToken not nil")
             Network.get(url: "http://localhost:41184/auth/check", params: params) { (data, error) in
                 do {
                     if let _data = data {
 
                         let result = try JSONDecoder().decode(AuthResponse.self, from: _data)
                         //os_log("JSC - Finished JSON decoding - \(result)")
+                        os_log("JSC - AUTH - Finished JSON decoding from auth check")
+//                        os_log("JSC - AUTH - Finished JSON decoding - %s.", type: .info, result as! CVarArg)
                         
                         switch result {
                         case .accepted(let successAuth):
                             defaults.set(successAuth.token, forKey: "apiToken")
                             self.isAuthorized = true
+                            os_log("JSC - AUTH - Get successful authorization")
                         case .waiting( _):
                             self.isAuthorized = false
                             self.pageTitleLabel.stringValue = "Please check Joplin to authorize Clipper."

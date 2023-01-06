@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>NSAppTransportSecurity</key>
@@ -70,7 +70,7 @@
 		</dict>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2020 Christopher Weirup. All rights reserved.</string>
+	<string>Copyright © 2022 Christopher Weirup. All rights reserved.</string>
 	<key>NSHumanReadableDescription</key>
 	<string>Safari extension to save web pages to Joplin, the open source note taking application.</string>
 </dict>

@@ -385,8 +385,10 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
         // Run code to generate list of tags
         builtInTagKeywords.removeAll()
 
-        let defaults = UserDefaults.standard
-        let apiToken = defaults.string(forKey: "apiToken")
+        //let defaults = UserDefaults.standard
+        // let apiToken = defaults.string(forKey: "apiToken")
+        
+        let apiToken = getAPIToken()
         
         let params = ["token": apiToken]
         

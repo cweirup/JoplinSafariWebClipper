@@ -53,3 +53,10 @@ enum AuthResponse: Decodable {
         }
     }
 }
+
+
+// MARK - Struct for checking if API Token is valid
+struct ApiCheck: Decodable {
+    var valid: Bool
+}
+

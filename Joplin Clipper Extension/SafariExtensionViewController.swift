@@ -218,6 +218,11 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
     func checkAuth() {
         os_log("JSC - In checkAuth()")
         
+        // How Joplin handles programmatically retrieving tokens:
+        // 2 Token Types:
+        //  1. API Token ("token") - Used for all API calls
+        //  2. Auth Token ("auth_token") - Used to grant permission to get API Token
+        
         // First, check if we have an AuthToken and an APIToken
         //  Then test using APIToken
         //  If good, we keep going
@@ -225,35 +230,52 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
         
         // OR Check other API calls - if we get an token error on the response, start the Auth process
         
+        // Retrieve both tokens
         let defaults = UserDefaults.standard
+        let apiToken = defaults.string(forKey: "apiToken")
         let authToken = defaults.string(forKey: "authToken")
-       
-        // Check if we get a valid response
-        // - If so, store API token in UserDefaults
-        // - If not, request auth_token and update
-        let params = ["auth_token": authToken]
-        //os_log("JSC - AUTH - Retrieved AuthToken")
-        //os_log(authToken)
-        os_log("JSC - Retrieved AuthToken: %@.", log: .default, type: .info, authToken!)
-        //os_log("JSC - Retrieved AuthToken: %@.", authToken)
-        print(authToken)
         
-        if (authToken != nil) {
-            os_log("JSC - AUTH - authToken not nil")
+        //let log = OSLog(subsystem: "Joplin Clipper", category: "auth")
+        //os_log("JSC - AUTH - apiToken from initial check = %{public}@", log: log, type: .info, (apiToken ?? "Got nothing"))
+        //os_log("JSC - AUTH - authToken from initial check = %{public}@", log: log, type: .info, (authToken ?? "Got nothing"))
+        
+        // Check the API Token
+        if (apiToken != nil) {
+            os_log("JSC - AUTH - Inside API Token check.")
+            let params = ["token": apiToken]
+            Network.get(url:"http://localhost:41184/auth/check", params: params as [String : Any]) { (data, error) in
+                // Check if we get true back
+                // If so, we are good to continue
+                if (error != nil) {
+                    print("Error: \(error!)")
+                } else {
+                    do {
+                        let api_token_check = try JSONDecoder().decode(ApiCheck.self, from: data!)
+                        if (api_token_check.valid == true) {
+                            os_log("JSC - AUTH - Confirmed API Token is valid.")
+                            // All good, let's get out of here
+                            self.isAuthorized = true
+                        }
+                    } catch {
+                        os_log("JSC - AUTH _ Error checking if API Token is valid.")
+                    }
+                }
+            }
+        } else if (authToken != nil) {
+            let params = ["auth_token": authToken]
+            os_log("JSC - AUTH - Inside Auth Token Check.")
+            // Now check the Auth Token if we don't have a valid API token
             Network.get(url: "http://localhost:41184/auth/check", params: params) { (data, error) in
                 do {
                     if let _data = data {
 
                         let result = try JSONDecoder().decode(AuthResponse.self, from: _data)
-                        //os_log("JSC - Finished JSON decoding - \(result)")
-                        os_log("JSC - AUTH - Finished JSON decoding from auth check")
-//                        os_log("JSC - AUTH - Finished JSON decoding - %s.", type: .info, result as! CVarArg)
                         
                         switch result {
                         case .accepted(let successAuth):
                             defaults.set(successAuth.token, forKey: "apiToken")
                             self.isAuthorized = true
-                            os_log("JSC - AUTH - Get successful authorization")
+                            os_log("JSC - AUTH - Got successful authorization")
                         case .waiting( _):
                             self.isAuthorized = false
                             self.pageTitleLabel.stringValue = "Please check Joplin to authorize Clipper."
@@ -385,8 +407,10 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
         // Run code to generate list of tags
         builtInTagKeywords.removeAll()
 
-        let defaults = UserDefaults.standard
-        let apiToken = defaults.string(forKey: "apiToken")
+        //let defaults = UserDefaults.standard
+        // let apiToken = defaults.string(forKey: "apiToken")
+        
+        let apiToken = getAPIToken()
         
         let params = ["token": apiToken]
         

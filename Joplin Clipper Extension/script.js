@@ -69,6 +69,7 @@
 
  async function handleMessage(event) {
     if (event.name == "command") {
+        console.log("JSC - handleMessage - Received " + event.message + " Event")
         // Execute the Send to Joplin command
         const commandObj = event.message
         const response = await prepareCommandResponse(commandObj);
@@ -361,6 +362,8 @@
      const readability = new Readability(documentForReadability());
      const article = readability.parse();
 
+     console.log('JSC - readabilityProcess - Returned article')
+     
      if (!article) throw new Error('Could not parse HTML document with Readability');
 
      return {
@@ -399,13 +402,14 @@ function buildRange(document, startOffset, endOffset, nodeData, nodeHTML, nodeTa
 }
     
  async function prepareCommandResponse(command) {
-     //console.log('Got command: ${command.name}');
-     //console.log('shouldSendToJoplin: ${command.shouldSendToJoplin}');
+     console.log('JSC - prepareCommandResponse - Got command: ${command.name}');
+     console.log('JSC - prepareCommandResponse - shouldSendToJoplin: ${command.shouldSendToJoplin}');
      const shouldSendToJoplin = !!command.shouldSendToJoplin
      
      const convertToMarkup = command.preProcessFor ? command.preProcessFor : 'markdown';
 
      const clippedContentResponse = (title, html, imageSizes, anchorNames, stylesheets) => {
+         console.log('JSC - clippedContentResponse')
          return {
              name: shouldSendToJoplin ? 'sendContentToJoplin' : 'clippedContent',
              title: title,
@@ -423,7 +427,7 @@ function buildRange(document, startOffset, endOffset, nodeData, nodeHTML, nodeTa
      };
 
      if (command.name === 'simplifiedPageHtml') {
-
+         console.log('JSC - prepareCommandResponse - Starting Readability Process');
          let article = null;
          try {
              article = readabilityProcess();

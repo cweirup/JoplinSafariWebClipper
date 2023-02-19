@@ -80,6 +80,7 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
     override func viewDidLoad() {
         super.viewDidLoad()
         folderList.removeAllItems()
+        tagList.completionDelay = 0.25
     }
     
     override func viewWillAppear() {
@@ -150,6 +151,7 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
     
     @IBAction func clipSimplifiedPage(_ sender: Any) {
         responseStatus.stringValue = "Processing..."
+        os_log("JSC - in clipSimplifiedPage function")
         sendCommandToActiveTab(command: ["name": "simplifiedPageHtml"])
     }
     
@@ -164,6 +166,7 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
     }
     
     func sendCommandToActiveTab(command: Dictionary<String, String>) {
+        os_log("JSC - in sendCommandToActiveTab function")
         // Send 'command' to current page
         SFSafariApplication.getActiveWindow{ (activeWindow) in
             activeWindow?.getActiveTab{ (activeTab) in
@@ -404,6 +407,8 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
     }
     
     func loadTags() {
+        os_log("JSC - loadTags - Entered function")
+        
         // Run code to generate list of tags
         builtInTagKeywords.removeAll()
 
@@ -414,14 +419,17 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
         
         let params = ["token": apiToken]
         
+        os_log("JSC - loadTags - Start network requeest.")
         Network.get(url: tagsResource.url.absoluteString, params: params as [String : Any]) { (data, error) in
             if let _data = data {
                 //let jsonData = NSString(data: _data, encoding: String.Encoding.utf8.rawValue)
-                //os_log("JSC - Data from loadTags = \(String(describing: jsonData))")
+                //os_log("JSC - Data from loadTags = \(String(describing: _data))")
+                //os_log("JSC - loadTags - Tag Retrieval Response = %{public}@", log: log, type: .info, (_data as CVarArg ?? "Got nothing"))
                 
                 if let response = try? JSONDecoder().decode(Response.self, from: _data) {
                     for tag in response.items! {
                         self.builtInTagKeywords.append(tag.title ?? "")
+                        //os_log("JSC - loadTags - Tag Retrieval Response = %{public}@", log: log, type: .info, (tag.title ?? "Got nothing"))
                     }
                     
                     //has_more = response.has_more == "false" ? false : true
@@ -448,3 +456,4 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
         return tagMatches;
     }
 }
+

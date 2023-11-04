@@ -13,6 +13,7 @@
 		2E740873241C89960011240B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E740872241C89960011240B /* Images.xcassets */; };
 		2E95E62D2427090C00F1BDF7 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E95E62C2427090C00F1BDF7 /* NetworkManager.swift */; };
 		2E95E62F2427107000F1BDF7 /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E95E62E2427107000F1BDF7 /* Folder.swift */; };
+		2E96AFDC2AF608820036F462 /* ToolbarItemIcon.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2E96AFDB2AF608820036F462 /* ToolbarItemIcon.pdf */; };
 		2ECB448C23ED1C0A001956F7 /* Joplin_Clipper.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 2ECB448B23ED1C0A001956F7 /* Joplin_Clipper.entitlements */; };
 		2ECB448E23ED1C0A001956F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECB448D23ED1C0A001956F7 /* AppDelegate.swift */; };
 		2ECB449123ED1C0A001956F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2ECB448F23ED1C0A001956F7 /* Main.storyboard */; };
@@ -26,7 +27,6 @@
 		2ECB44BC23ED1C0C001956F7 /* SafariExtensionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECB44BB23ED1C0C001956F7 /* SafariExtensionViewController.swift */; };
 		2ECB44BF23ED1C0C001956F7 /* SafariExtensionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ECB44BD23ED1C0C001956F7 /* SafariExtensionViewController.xib */; };
 		2ECB44C223ED1C0C001956F7 /* script.js in Resources */ = {isa = PBXBuildFile; fileRef = 2ECB44C123ED1C0C001956F7 /* script.js */; };
-		2ECB44C423ED1C0C001956F7 /* ToolbarItemIcon.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2ECB44C323ED1C0C001956F7 /* ToolbarItemIcon.pdf */; };
 		2ED9B2EA26A8965A0084A5FD /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED9B2E926A8965A0084A5FD /* Auth.swift */; };
 		2EE19ECB24400FBA00B26799 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE19ECA24400FBA00B26799 /* Network.swift */; };
 		2EEE8B8B2400E30F00F751CC /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2EEE8B8A2400E30F00F751CC /* .gitignore */; };
@@ -92,6 +92,7 @@
 		2E740872241C89960011240B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2E95E62C2427090C00F1BDF7 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		2E95E62E2427107000F1BDF7 /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
+		2E96AFDB2AF608820036F462 /* ToolbarItemIcon.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = ToolbarItemIcon.pdf; sourceTree = "<group>"; };
 		2ECB448823ED1C0A001956F7 /* Joplin Clipper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Joplin Clipper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ECB448B23ED1C0A001956F7 /* Joplin_Clipper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Joplin_Clipper.entitlements; sourceTree = "<group>"; };
 		2ECB448D23ED1C0A001956F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -112,7 +113,6 @@
 		2ECB44BE23ED1C0C001956F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SafariExtensionViewController.xib; sourceTree = "<group>"; };
 		2ECB44C023ED1C0C001956F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2ECB44C123ED1C0C001956F7 /* script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = script.js; sourceTree = "<group>"; };
-		2ECB44C323ED1C0C001956F7 /* ToolbarItemIcon.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = ToolbarItemIcon.pdf; sourceTree = "<group>"; };
 		2ECB44C523ED1C0C001956F7 /* Joplin_Clipper_Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Joplin_Clipper_Extension.entitlements; sourceTree = "<group>"; };
 		2ED9B2E926A8965A0084A5FD /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
 		2EE19ECA24400FBA00B26799 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
@@ -229,11 +229,11 @@
 				2EEE8B902415BF2200F751CC /* JSDOMParser.js */,
 				2EEE8B912415BF2200F751CC /* Readability-readerable.js */,
 				2EEE8B922415BF2200F751CC /* Readability.js */,
-				2ECB44C323ED1C0C001956F7 /* ToolbarItemIcon.pdf */,
 				2ECB44C523ED1C0C001956F7 /* Joplin_Clipper_Extension.entitlements */,
 				2E740870241C86E70011240B /* Note.swift */,
 				2E95E62E2427107000F1BDF7 /* Folder.swift */,
 				2E73B9BE243BBE710022B356 /* Tag.swift */,
+				2E96AFDB2AF608820036F462 /* ToolbarItemIcon.pdf */,
 				2E740872241C89960011240B /* Images.xcassets */,
 				2E95E62C2427090C00F1BDF7 /* NetworkManager.swift */,
 				2EE19ECA24400FBA00B26799 /* Network.swift */,
@@ -417,10 +417,10 @@
 				2EEE8B9E2415BF2300F751CC /* Readability-readerable.js in Resources */,
 				2EEE8B8E2400E31000F751CC /* .gitignore in Resources */,
 				2EEE8BA22415BF2300F751CC /* Readability.js in Resources */,
-				2ECB44C423ED1C0C001956F7 /* ToolbarItemIcon.pdf in Resources */,
 				2E740873241C89960011240B /* Images.xcassets in Resources */,
 				2EEE8B9A2415BF2300F751CC /* JSDOMParser.js in Resources */,
 				2ECB44BF23ED1C0C001956F7 /* SafariExtensionViewController.xib in Resources */,
+				2E96AFDC2AF608820036F462 /* ToolbarItemIcon.pdf in Resources */,
 				2ECB44C223ED1C0C001956F7 /* script.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -643,7 +643,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 0.4.2;
+				MARKETING_VERSION = 0.4.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cweirup.Joplin-Clipper-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -667,7 +667,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 0.4.2;
+				MARKETING_VERSION = 0.4.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cweirup.Joplin-Clipper-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -694,7 +694,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 0.4.2;
+				MARKETING_VERSION = 0.4.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cweirup.Joplin-Clipper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -720,7 +720,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 0.4.2;
+				MARKETING_VERSION = 0.4.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cweirup.Joplin-Clipper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

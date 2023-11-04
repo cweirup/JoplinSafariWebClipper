@@ -241,7 +241,7 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
         //let log = OSLog(subsystem: "Joplin Clipper", category: "auth")
         //os_log("JSC - AUTH - apiToken from initial check = %{public}@", log: log, type: .info, (apiToken ?? "Got nothing"))
         //os_log("JSC - AUTH - authToken from initial check = %{public}@", log: log, type: .info, (authToken ?? "Got nothing"))
-        
+
         // Check the API Token
         if (apiToken != nil) {
             os_log("JSC - AUTH - Inside API Token check.")
@@ -249,8 +249,14 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
             Network.get(url:"http://localhost:41184/auth/check", params: params as [String : Any]) { (data, error) in
                 // Check if we get true back
                 // If so, we are good to continue
+                // If not, we need to reauthorize by
+                // PROBLEM: We aren't getting "nil", we get FALSE back. Need to check for that.
+                
+                os_log("JSC - AUTH - Is Error Here? %{public}@", error.debugDescription)
                 if (error != nil) {
-                    print("Error: \(error!)")
+                    
+                    //print("Error: \(error!)")
+                    os_log("JSC - AUTH - Error: %{public}@", error.debugDescription)
                 } else {
                     do {
                         let api_token_check = try JSONDecoder().decode(ApiCheck.self, from: data!)
@@ -258,6 +264,13 @@ class SafariExtensionViewController: SFSafariExtensionViewController, NSTokenFie
                             os_log("JSC - AUTH - Confirmed API Token is valid.")
                             // All good, let's get out of here
                             self.isAuthorized = true
+                        } else {
+                            os_log("JSC - AUTH - API Token is invalid!")
+                            // Need a new API Token
+                            // Clear out the tokens and re-request
+                            defaults.removeObject(forKey: "apiToken")
+                            defaults.removeObject(forKey: "authToken")
+                            self.requestAuth()
                         }
                     } catch {
                         os_log("JSC - AUTH _ Error checking if API Token is valid.")
